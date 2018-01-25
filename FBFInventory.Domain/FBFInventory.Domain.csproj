@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8326AB16-4724-4295-9827-042C229BE635}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FBFInventory.Domain</RootNamespace>
+    <AssemblyName>FBFInventory.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entity\InOrOut.cs" />
+    <Compile Include="Entity\DRItem.cs" />
+    <Compile Include="Entity\ReturnedHistory.cs" />
+    <Compile Include="Entity\ReturnedItem.cs" />
+    <Compile Include="Entity\ScrapItem.cs" />
+    <Compile Include="History\InOutHelper.cs" />
+    <Compile Include="History\HistoryParam.cs" />
+    <Compile Include="History\InOutDRParam.cs" />
+    <Compile Include="History\InOutParam.cs" />
+    <Compile Include="History\ReturnInOutParam.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Entity\Item.cs" />
+    <Compile Include="Entity\Category.cs" />
+    <Compile Include="Entity\ItemHistory.cs" />
+    <Compile Include="Entity\ReceiptType.cs" />
+    <Compile Include="Entity\MeasuredBy.cs" />
+    <Compile Include="Entity\Supplier.cs" />
+    <Compile Include="Entity\Customer.cs" />
+    <Compile Include="Entity\DR.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

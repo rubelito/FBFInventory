@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{00FA4880-88FC-4BD9-BF95-F1E7981A402A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FBFInventory.Winforms</RootNamespace>
+    <AssemblyName>FBFInventory.Winforms</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Telerik.WinControls, Version=2017.3.1017.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e" />
+    <Reference Include="Telerik.WinControls.Themes.Aqua, Version=2017.3.1017.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.WinControls.UI, Version=2017.3.1017.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for WinForms R3 2017\Bin40\Telerik.WinControls.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="TelerikCommon, Version=2017.3.1017.40, Culture=neutral, PublicKeyToken=5bb2a467cbec794e, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Progress\Telerik UI for WinForms R3 2017\Bin40\TelerikCommon.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CategoryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CategoryDialog.Designer.cs">
+      <DependentUpon>CategoryDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CategoryMaintenanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CategoryMaintenanceForm.Designer.cs">
+      <DependentUpon>CategoryMaintenanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DRBrowserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DRBrowserForm.Designer.cs">
+      <DependentUpon>DRBrowserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\DialogParam.cs" />
+    <Compile Include="Helper\DRParam.cs" />
+    <Compile Include="Helper\ItemListViewDto.cs" />
+    <Compile Include="Helper\Operation.cs" />
+    <Compile Include="Helper\SupplierOrCustomer.cs" />
+    <Compile Include="HistoryViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistoryViewForm.Designer.cs">
+      <DependentUpon>HistoryViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InOutWithOutDRForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InOutWithOutDRForm.Designer.cs">
+      <DependentUpon>InOutWithOutDRForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InWithDRForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InWithDRForm.Designer.cs">
+      <DependentUpon>InWithDRForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ItemBrowserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItemBrowserForm.Designer.cs">
+      <DependentUpon>ItemBrowserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewItemForm.Designer.cs">
+      <DependentUpon>NewItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RemoveItemDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RemoveItemDialog.Designer.cs">
+      <DependentUpon>RemoveItemDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReturnedItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReturnedItemForm.Designer.cs">
+      <DependentUpon>ReturnedItemForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierOrCustomerDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplierOrCustomerDialog.Designer.cs">
+      <DependentUpon>SupplierOrCustomerDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SupplierCustomerMaintenanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SupplierCustomerMaintenanceForm.Designer.cs">
+      <DependentUpon>SupplierCustomerMaintenanceForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="CategoryDialog.resx">
+      <DependentUpon>CategoryDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CategoryMaintenanceForm.resx">
+      <DependentUpon>CategoryMaintenanceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DRBrowserForm.resx">
+      <DependentUpon>DRBrowserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistoryViewForm.resx">
+      <DependentUpon>HistoryViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InOutWithOutDRForm.resx">
+      <DependentUpon>InOutWithOutDRForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InWithDRForm.resx">
+      <DependentUpon>InWithDRForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ItemBrowserForm.resx">
+      <DependentUpon>ItemBrowserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewItemForm.resx">
+      <DependentUpon>NewItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="RemoveItemDialog.resx">
+      <DependentUpon>RemoveItemDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReturnedItemForm.resx">
+      <DependentUpon>ReturnedItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplierOrCustomerDialog.resx">
+      <DependentUpon>SupplierOrCustomerDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SupplierCustomerMaintenanceForm.resx">
+      <DependentUpon>SupplierCustomerMaintenanceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FBFInventory.Domain\FBFInventory.Domain.csproj">
+      <Project>{8326ab16-4724-4295-9827-042c229be635}</Project>
+      <Name>FBFInventory.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FBFInventory.Infrastructure\FBFInventory.Infrastructure.csproj">
+      <Project>{83f18e3f-a145-4d62-ad18-e8b6fb07e75e}</Project>
+      <Name>FBFInventory.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Image\magnifying_glass.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,16 @@
+﻿<Properties StartupConfiguration="{D2751016-A3E7-4170-907A-A0EF4743A85E}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FBFInventory.MVC/Scripts/DR.js">
+    <Files>
+      <File FileName="FBFInventory.MVC/Controllers/HomeController.cs" Line="71" Column="26" />
+      <File FileName="FBFInventory.MVC/Scripts/DR.js" Line="13" Column="29" />
+      <File FileName="FBFInventory.MVC/Views/Home/ProductList.cshtml" Line="17" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.FBFInventory.MVC PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
