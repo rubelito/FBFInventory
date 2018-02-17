@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using FBFInventory.Domain.Entity;
+﻿using FBFInventory.Domain.Entity;
 using FBFInventory.Domain.History;
 using FBFInventory.Infrastructure.Dto;
 
@@ -44,21 +42,16 @@ namespace FBFInventory.Infrastructure.Service
 
         public void RemoveFromDR(InOutDRParam outParam){
             Item itemAfterOut = _itemService.Find(outParam.DRItem.Item.Id);
-            double oldQty = itemAfterOut.GetAppropriateQuantity;
 
             if (outParam.InOrOut == InOrOut.In)
                 InOutHelper.AddToAppopriateMeasurement(itemAfterOut, outParam.DRItem.Qty);
             else
                 InOutHelper.SubtractToAppopriateMeasurement(itemAfterOut, outParam.DRItem.Qty);
 
-            double newQty = itemAfterOut.GetAppropriateQuantity;
-
             outParam.DRItem.Item = itemAfterOut;
-            var p = CreateHistoryParameterWithDr(outParam, oldQty, newQty);
-            ItemHistory h = InOutHelper.MakeHistory(p);
-            _historyService.Add(h);
             _itemService.Edit(itemAfterOut);
-           
+
+            _historyService.DeleteHistoryByDRAndItem(outParam.DRItem.DR.Id, itemAfterOut.Id);
             _drService.DeleteDRItem(outParam.DRItem.Id);
         }
 
@@ -92,7 +85,7 @@ namespace FBFInventory.Infrastructure.Service
         }
 
         public void InOutGoodItems(ReturnInOutParam inOutParam){
-            Item ItemAfterInOrOut = _itemService.Find(inOutParam.ReturnedItem.Item.Id);
+            Item ItemAfterInOrOut = _itemService.Find(inOutParam.ItemId);
             double oldQty = ItemAfterInOrOut.GetAppropriateQuantity;
 
             if (inOutParam.InOrOut == InOrOut.In)
@@ -101,16 +94,22 @@ namespace FBFInventory.Infrastructure.Service
                 InOutHelper.SubtractToAppopriateMeasurement(ItemAfterInOrOut, inOutParam.ReturnedItem.Qty);
 
             double newQty = ItemAfterInOrOut.GetAppropriateQuantity;
-            var p = CreateHistoryParameterForReturnedItems(inOutParam, oldQty, newQty);
-            ItemHistory h = InOutHelper.MakeHistory(p);
-            _historyService.Add(h);
+            
             _itemService.Edit(ItemAfterInOrOut);
 
-            if (inOutParam.InOrOut == InOrOut.In)
-                _returnedHistoryService.AddReturnedItem(inOutParam.ReturnedItem.ReturnedHistory.Id,
+            if (inOutParam.InOrOut == InOrOut.In){
+                var p = CreateHistoryParameterForReturnedItems(inOutParam, oldQty, newQty);
+                ItemHistory h = InOutHelper.MakeHistory(p);
+                _historyService.Add(h);
+
+                _returnedHistoryService.AddReturnedGoodItem(inOutParam.ReturnedItem.ReturnedHistory.Id,
                     inOutParam.ReturnedItem);
-            else
-                _returnedHistoryService.DeleteGoodItem(inOutParam.ReturnedItem.Id);          
+            }
+            else{
+                _returnedHistoryService.DeleteGoodItem(inOutParam.ReturnedItem.Id);
+                _historyService.DeleteReturnedHistoryByDRAndItem(inOutParam.DrId
+                    , inOutParam.ItemId);
+            }
         }
 
         public void InOutScrapItems(ScrapInOutParam inOutparam){
@@ -155,15 +154,16 @@ namespace FBFInventory.Infrastructure.Service
 
         private static HistoryParam CreateHistoryParameterForReturnedItems(ReturnInOutParam param
             , double oldQty, double newQty){
-                HistoryParam p = new HistoryParam();
-                p.InOrOut = param.InOrOut;
-                p.ItemToMonitor = param.ReturnedItem.Item;
-                p.OldQty = oldQty;
-                p.NewQty = newQty;
+            HistoryParam p = new HistoryParam();
+            p.InOrOut = param.InOrOut;
+            p.ItemToMonitor = param.ReturnedItem.Item;
+            p.OldQty = oldQty;
+            p.NewQty = newQty;
 
-                p.InOutQty = param.ReturnedItem.Qty;
-                p.Note = param .Note;
-                p.DR = param.ReturnedItem.ReturnedHistory.DR;
+            p.InOutQty = param.ReturnedItem.Qty;
+            p.Note = param .Note;
+            p.DR = param.ReturnedItem.ReturnedHistory.DR;
+            p.IsMistaken = true;
 
                 return p;
         }

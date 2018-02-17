@@ -12,7 +12,6 @@ namespace FBFInventory.Winforms
 {
     public partial class ReturnedItemForm : Form
     {
-        private readonly ItemService _itemService;
         private readonly ReturnedHistoryService _returnedHistoryService;
         private readonly InOutService _inOutService;
         private readonly DRService _drService;
@@ -32,10 +31,9 @@ namespace FBFInventory.Winforms
 
         private Operation _op;
 
-        public ReturnedItemForm(ReturnedHistory history, ItemService itemService,
-            ReturnedHistoryService returnedHistoryService, InOutService inOutService, DRService drService){
+        public ReturnedItemForm(ReturnedHistory history, ReturnedHistoryService returnedHistoryService,
+            InOutService inOutService, DRService drService){
             _history = history;
-            _itemService = itemService;
             _returnedHistoryService = returnedHistoryService;
             _inOutService = inOutService;
             _drService = drService;
@@ -225,18 +223,18 @@ namespace FBFInventory.Winforms
         private void SetReturnValueToControls(){
             lblReturnItem.Text = _selectedItemForReturn.Name;
             DRItem item = _drItems.FirstOrDefault(d => d.Item.Id == _selectedItemForReturn.Id);
-            lblReturnQty.Text = Convert.ToString(item.Qty);
+            lblGoodQty.Text = Convert.ToString(item.Qty);
 
             if (_selectedItemForReturn.MeasuredBy == MeasuredBy.Quantity){
-                lblReturnMeasuredBy.Text = "Qty.";
+                lblGoodMeasuredBy.Text = "Qty.";
                 lblReturnMeasuredBy1.Text = "Qty.";
             }
             else if (_selectedItemForReturn.MeasuredBy == MeasuredBy.Meters){
-                lblReturnMeasuredBy.Text = "m.";
+                lblGoodMeasuredBy.Text = "m.";
                 lblReturnMeasuredBy1.Text = "m.";
             }
             else if (_selectedItemForReturn.MeasuredBy == MeasuredBy.Feet){
-                lblReturnMeasuredBy.Text = "f.";
+                lblGoodMeasuredBy.Text = "f.";
                 lblReturnMeasuredBy1.Text = "f.";
             }
         }
@@ -262,8 +260,8 @@ namespace FBFInventory.Winforms
 
         private void SetDefaultUIForReturn(){
             lblReturnItem.Text = "Click here to search item...";
-            lblReturnQty.Text = "0";
-            txtReturnQty.Text = "0";
+            lblGoodQty.Text = "0";
+            txtGoodQty.Text = "0";
         }
 
         private void SetDefaultUIForScrap(){
@@ -273,20 +271,29 @@ namespace FBFInventory.Winforms
         }
 
         private void cmdReturn_Click(object sender, EventArgs e){
-            if (_selectedItemForReturn != null){
-                if (IsItemAlreadyIncluded(returnListView, _selectedItemForReturn.Id)){
+            ReturnGoodItem();
+        }
+
+        private void ReturnGoodItem(){
+            if (_selectedItemForReturn != null)
+            {
+                if (IsItemAlreadyIncluded(goodListView, _selectedItemForReturn.Id))
+                {
                     MessageBox.Show("Item already in the good list!",
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else if (txtReturnQty.Text == "0" || string.IsNullOrWhiteSpace(txtReturnQty.Text)){
+                else if (txtGoodQty.Text == "0" || string.IsNullOrWhiteSpace(txtGoodQty.Text))
+                {
                     MessageBox.Show("Please provide Quantity!",
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else if (IsInputIsGreaterThanCurrentQty(txtReturnQty, lblReturnQty)){
+                else if (IsInputIsGreaterThanCurrentQty(txtGoodQty, lblGoodQty))
+                {
                     MessageBox.Show("In should not be greated than DR stocks!",
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else{
+                else
+                {
                     ReturnedItem item = MakeGoodItem();
                     AddToStocksAndMakeHistory(item);
                     AddToListView(false, item, null);
@@ -294,7 +301,8 @@ namespace FBFInventory.Winforms
                     _selectedItemForReturn = null;
                 }
             }
-            else{
+            else
+            {
                 MessageBox.Show("Please select item!",
                     "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
@@ -314,12 +322,19 @@ namespace FBFInventory.Winforms
             ReturnInOutParam p = new ReturnInOutParam();
             p.ReturnedItem = rI;
             p.InOrOut = InOrOut.In;
-            p.Note = rI.Qty + " Item(s) Returned To Stocks with. Please refer to Return History";
+            p.Note = rI.Qty + " Item(s) Returned To Stocks. Please refer to Return History. DR : " +
+                     _dr.DRNumberToDisplay;
+            p.DrId = _dr.Id;
+            p.ItemId = rI.Item.Id;
 
             _inOutService.InOutGoodItems(p);
         }
 
         private void cmdScrap_Click(object sender, EventArgs e){
+            ScrapItem();
+        }
+
+        private void ScrapItem(){
             if (_selectedItemForScrap != null){
                 if (IsItemAlreadyIncluded(scrapListView, _selectedItemForScrap.Id)){
                     MessageBox.Show("Item already in the scrap list!",
@@ -329,8 +344,7 @@ namespace FBFInventory.Winforms
                     MessageBox.Show("Please provide Quantity!",
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else if (IsInputIsGreaterThanCurrentQty(txtScrapQty, lblScrapQty))
-                {
+                else if (IsInputIsGreaterThanCurrentQty(txtScrapQty, lblScrapQty)){
                     MessageBox.Show("In should not be greated than DR stocks!",
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
@@ -379,7 +393,7 @@ namespace FBFInventory.Winforms
         private ReturnedItem MakeGoodItem(){
             ReturnedItem i = new ReturnedItem();
             i.Item = _selectedItemForReturn;
-            i.Qty = Convert.ToDouble(txtReturnQty.Text);
+            i.Qty = Convert.ToDouble(txtGoodQty.Text);
 
             return i;
         }
@@ -407,19 +421,19 @@ namespace FBFInventory.Winforms
                 arr[1] = goodItem.Item.Name;
                 arr[2] = Convert.ToString(goodItem.Qty);
                 ListViewItem lit = new ListViewItem(arr);
-                returnListView.Items.Add(lit);
+                goodListView.Items.Add(lit);
             }
         }
 
         private void cmdGoodRemove_Click(object sender, EventArgs e){
-            if (returnListView.SelectedIndices.Count > 0){
+            if (goodListView.SelectedIndices.Count > 0){
                 DialogResult r = MessageBox.Show("Are you sure you want to remove?",
                     "Remove",
                     MessageBoxButtons.YesNo);
                 if (r == DialogResult.Yes){
-                    int selectedIndex = returnListView.SelectedIndices[0];
+                    int selectedIndex = goodListView.SelectedIndices[0];
                     RemoveGoodItemFromDBandMakeHistory();
-                    returnListView.Items.RemoveAt(selectedIndex);
+                    goodListView.Items.RemoveAt(selectedIndex);
                 }
             }
             else{
@@ -433,12 +447,14 @@ namespace FBFInventory.Winforms
             p.ReturnedItem = GetGoodItemInListView();
             p.Note = p.ReturnedItem.Qty + " Item(s) is removed from Return History";
             p.InOrOut = InOrOut.Out;
+            p.DrId = _dr.Id;
+            p.ItemId = p.ReturnedItem.Item.Id;
 
             _inOutService.InOutGoodItems(p);
         }
 
         private ReturnedItem GetGoodItemInListView(){
-            long itemId = Convert.ToInt32(returnListView.SelectedItems[0].SubItems[0].Text);
+            long itemId = Convert.ToInt32(goodListView.SelectedItems[0].SubItems[0].Text);
             ReturnedItem item = _goodItems.FirstOrDefault(d => d.Item.Id == itemId);
             return item;
         }
@@ -478,7 +494,8 @@ namespace FBFInventory.Winforms
             this.Close();
         }
 
-        private void txtReturnQty_KeyPress(object sender, KeyPressEventArgs e){
+        private void txtGoodQty_KeyPress(object sender, KeyPressEventArgs e)
+        {
             AllowNumberOnly(sender, e);
         }
 
@@ -495,6 +512,6 @@ namespace FBFInventory.Winforms
             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1)){
                 e.Handled = true;
             }
-        }
+        }    
     }
 }

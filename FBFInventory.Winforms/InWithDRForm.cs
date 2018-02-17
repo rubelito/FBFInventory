@@ -6,6 +6,7 @@ using FBFInventory.Domain.Entity;
 using FBFInventory.Domain.History;
 using FBFInventory.Infrastructure.Service;
 using FBFInventory.Winforms.Helper;
+using FBFInventory.Winforms.Report;
 
 namespace FBFInventory.Winforms
 {
@@ -18,7 +19,7 @@ namespace FBFInventory.Winforms
         private readonly InOutService _inOutService;
         private readonly DRParam _param;
         private List<Item> _items;
-        private List<DRItem> _drItems; 
+        private List<DRItem> _drItems;
 
         private Item _selectedItemToAdd;
         private DRItem _selectedItemInListView;
@@ -46,6 +47,7 @@ namespace FBFInventory.Winforms
 
         private void InWithDR_Load(object sender, EventArgs e){
             ShowSaveAndCancelForEdit(false);
+            cmdPrint.Enabled = false;
             SetTitle();
 
             if (_param.Operation == Operation.Add){
@@ -81,11 +83,14 @@ namespace FBFInventory.Winforms
                 _selectedCustomer = _param.SelectedDR.Customer;
                 txtProject.Text = _param.SelectedDR.Project;
                 txtAddress.Text = _param.SelectedDR.DeliveryAddress;
+                txtDeliveredBy.Text = _param.SelectedDR.DeliveredBy;
+                txtVehicleNumber.Text = _param.SelectedDR.VehiclePlateNumber;
             }
 
             dateTimePicker1.Value = _param.SelectedDR.Date;
             txtNote.Text = _param.SelectedDR.Note;
             _currentDr = _param.SelectedDR;
+            cmdPrint.Enabled = true;
         }
 
         private void LoadItemsToGridView(){
@@ -105,6 +110,7 @@ namespace FBFInventory.Winforms
                 lblSupplier.Text = "Click here to provide supplier....";
                 cmdInOut.Text = "In";
                 listView1.Columns[3].Text = "In";
+                lblInOut.Text = "In :";
             }
             else if (_param.ReceiptType == ReceiptType.DR){
                 this.Text = "Out (DR)";
@@ -114,6 +120,7 @@ namespace FBFInventory.Winforms
                 lblSupplier.Text = "Click here to provide customer....";
                 cmdInOut.Text = "Out";
                 listView1.Columns[3].Text = "Out";
+                lblInOut.Text = "Out :";
             }
         }
 
@@ -200,11 +207,11 @@ namespace FBFInventory.Winforms
 
         private void cmdRemove_Click(object sender, EventArgs e){
             if (listView1.SelectedIndices.Count > 0){
-                RemoveItemDialog d = new RemoveItemDialog();
+                RemoveItemDialog d = new RemoveItemDialog(_param.ReceiptType);
                 d.ShowDialog();
                 if (d.IsOk){
                     int selectedIndex = listView1.SelectedIndices[0];
-                    RemoveItemFromDBandMakeHistory(d.Comment);
+                    RemoveItemFromDBandMakeHistory();
                     listView1.Items.RemoveAt(selectedIndex);
                 }
             }
@@ -214,11 +221,10 @@ namespace FBFInventory.Winforms
             }
         }
 
-        private void RemoveItemFromDBandMakeHistory(string comment){
+        private void RemoveItemFromDBandMakeHistory(){
             InOutDRParam p = new InOutDRParam();
             p.DRItem = GetSelectedItemInListView();
-            p.Note = "Item is removed from " + _drText + " : " + comment;
-            p.InOrOut = DetermineIfInOrOut(true);
+            DetermineIfInOrOutAndMakeComment(p, true);
 
             _inOutService.RemoveFromDR(p);
             _drItems.Remove(p.DRItem);
@@ -249,7 +255,7 @@ namespace FBFInventory.Winforms
             }
             else if (_param.ReceiptType == ReceiptType.DR){
                 if (_selectedCustomer == null){
-                    MessageBox.Show("Please provide customer", 
+                    MessageBox.Show("Please provide customer",
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
@@ -264,13 +270,15 @@ namespace FBFInventory.Winforms
             DR dr = new DR();
             if (_param.ReceiptType == ReceiptType.SDR){
                 dr.Supplier = _selectedSupplier;
-                dr.SDRNumber = txtSDR.Text; 
+                dr.SDRNumber = txtSDR.Text;
             }
             else if (_param.ReceiptType == ReceiptType.DR){
                 dr.Customer = _selectedCustomer;
                 dr.DRNumber = txtSDR.Text;
                 dr.Project = txtProject.Text;
                 dr.DeliveryAddress = txtAddress.Text;
+                dr.DeliveredBy = txtDeliveredBy.Text;
+                dr.VehiclePlateNumber = txtVehicleNumber.Text;
             }
 
             dr.Type = _param.ReceiptType;
@@ -279,6 +287,7 @@ namespace FBFInventory.Winforms
 
             _drService.Add(dr);
             _currentDr = _drService.NewlyCreatedDR;
+            cmdPrint.Enabled = true;
 
             EnableDisableDrControls(false);
             cmdCreate.Enabled = false;
@@ -291,10 +300,14 @@ namespace FBFInventory.Winforms
             if (_param.ReceiptType == ReceiptType.SDR){
                 txtProject.Enabled = !enabled;
                 txtAddress.Enabled = !enabled;
+                txtDeliveredBy.Enabled = !enabled;
+                txtVehicleNumber.Enabled = !enabled;
             }
             else if (_param.ReceiptType == ReceiptType.DR){
                 txtProject.Enabled = enabled;
                 txtAddress.Enabled = enabled;
+                txtDeliveredBy.Enabled = enabled;
+                txtVehicleNumber.Enabled = enabled;
             }
         }
 
@@ -316,13 +329,15 @@ namespace FBFInventory.Winforms
         private void UpdateDR(){
             if (_param.ReceiptType == ReceiptType.SDR){
                 _param.SelectedDR.SDRNumber = txtSDR.Text;
-                _param.SelectedDR.Supplier = _selectedSupplier;               
+                _param.SelectedDR.Supplier = _selectedSupplier;
             }
             else if (_param.ReceiptType == ReceiptType.DR){
                 _param.SelectedDR.DRNumber = txtSDR.Text;
                 _param.SelectedDR.Customer = _selectedCustomer;
                 _param.SelectedDR.Project = txtProject.Text;
                 _param.SelectedDR.DeliveryAddress = txtAddress.Text;
+                _param.SelectedDR.DeliveredBy = txtDeliveredBy.Text;
+                _param.SelectedDR.VehiclePlateNumber = txtVehicleNumber.Text;
             }
 
             _param.SelectedDR.Date = dateTimePicker1.Value;
@@ -346,6 +361,14 @@ namespace FBFInventory.Winforms
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 else{
+                    if (_currentDr.Type == ReceiptType.DR){
+                        if (IsInputIsGreaterThanCurrentQty(txtQty, lblCurrentQty)){
+                            MessageBox.Show("Number of items should not be greated that current stocks.",
+                                "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                    }
+
                     DRItem item = MakeDRItem();
                     AddOrSubtractToStockAndMakeHistory(item);
                     AddToListView(item);
@@ -359,31 +382,35 @@ namespace FBFInventory.Winforms
             }
         }
 
+        private bool IsInputIsGreaterThanCurrentQty(TextBox inTextBox, Label qtyLabel){
+            return Convert.ToDouble(inTextBox.Text) > Convert.ToDouble(qtyLabel.Text);
+        }
+
         private void AddOrSubtractToStockAndMakeHistory(DRItem item){
             InOutDRParam p = new InOutDRParam();
             p.DRItem = item;
-            p.InOrOut = DetermineIfInOrOut(false);
+            DetermineIfInOrOutAndMakeComment(p, false);
 
             _inOutService.InOutWithDR(p);
         }
 
-        private InOrOut DetermineIfInOrOut(bool isRemovedItem){
-            InOrOut inOrOut = InOrOut.In;
-
+        private void DetermineIfInOrOutAndMakeComment(InOutDRParam p, bool isRemovedItem){
             if (_param.ReceiptType == ReceiptType.SDR){
                 if (isRemovedItem)
-                    inOrOut = InOrOut.Out;
-                else
-                    inOrOut = InOrOut.In; 
+                    p.InOrOut = InOrOut.Out;
+                else{
+                    p.InOrOut = InOrOut.In;
+                    p.Note = p.DRItem.Qty + " went from SDR: " + _currentDr.DRNumberToDisplay;
+                }
             }
             else if (_param.ReceiptType == ReceiptType.DR){
                 if (isRemovedItem)
-                    inOrOut = InOrOut.In;
-                else
-                    inOrOut = InOrOut.Out;
+                    p.InOrOut = InOrOut.In;
+                else{
+                    p.InOrOut = InOrOut.Out;
+                    p.Note = p.DRItem.Qty + " went to DR: " + _currentDr.DRNumberToDisplay;
+                }
             }
-
-            return inOrOut;
         }
 
         private DRItem MakeDRItem(){
@@ -408,6 +435,28 @@ namespace FBFInventory.Winforms
             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1)){
                 e.Handled = true;
             }
+        }
+
+        private void cmdPrint_Click(object sender, EventArgs e){
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel Documents (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = _currentDr.DRNumberToDisplay;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK){
+                try{
+                    GenerateExcelReport(saveFileDialog.FileName);
+                    MessageBox.Show("Report Generated!");
+                }
+                catch (Exception ex){
+                    MessageBox.Show(ex.Message, "Error Exporting Report");
+                }
+            }
+        }
+
+        private void GenerateExcelReport(string path){
+            DR dr = _drService.GetDRWithItems(_currentDr.Id);
+            DRReporter reporter = new DRReporter(dr, path);
+
+            reporter.Export();
         }
     }
 }

@@ -1,35 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using FBFInventory.Domain.Entity;
 
 namespace FBFInventory.Winforms
 {
     public partial class RemoveItemDialog : Form
     {
+        private readonly ReceiptType _type;
         private bool _isOk;
 
-        public RemoveItemDialog()
-        {
+        public RemoveItemDialog(ReceiptType type){
+            _type = type;
             InitializeComponent();
         }
 
         public bool IsOk {get { return _isOk; }}
-        public string Comment {get { return txtComment.Text; }}
 
         private void cmdOk_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtComment.Text)){
-                MessageBox.Show("Please provide comments!", "",
-                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-
             _isOk = true;
             this.Close();
         }
@@ -37,6 +25,17 @@ namespace FBFInventory.Winforms
         private void cmdCancel_Click(object sender, EventArgs e){
             _isOk = false;
             this.Close();
+        }
+
+        private void RemoveItemDialog_Load(object sender, EventArgs e){
+            string message = string.Empty;
+
+            if (_type == ReceiptType.SDR)
+                message = "Selected Items will be subtracted to stocks";
+            else if (_type == ReceiptType.DR)
+                message = "Selected Items will return to stocks";
+
+            lblMessage.Text = message;
         }
     }
 }

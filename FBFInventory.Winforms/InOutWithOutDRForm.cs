@@ -84,19 +84,26 @@ namespace FBFInventory.Winforms
             }         
 
             InOutParam p = new InOutParam();
-            p.Item = _item;
-            p.Note = txtNote.Text;
+            p.Item = _item;           
             p.Qty = Convert.ToDouble(txtQty.Text);
 
             if (_inOrOut == InOrOut.In){
                 p.InOrOut = InOrOut.In;
+                
+                string note = p.Qty + " stock(s) added to inventory of " + p.Item.Name;
+                p.Note = note + " : (" + txtNote.Text + ")";
+
                 _inOutService.In(p);
-                MessageBox.Show(p.Qty + " stock(s) added to inventory of " + p.Item.Name);
+                MessageBox.Show(note);
             }
             else if (_inOrOut == InOrOut.Out){
                 p.InOrOut = InOrOut.Out;
+
+                string note = p.Qty + " stock(s) subtracted to inventory of " + p.Item.Name;
+                p.Note = note + " : (" + txtNote.Text + ")";
+
                 _inOutService.Out(p);
-                MessageBox.Show(p.Qty + " stock(s) subtracted to inventory of " + p.Item.Name);
+                MessageBox.Show(note);
             }
 
             _haveChangedQuantity = true;

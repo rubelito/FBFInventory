@@ -11,7 +11,7 @@ namespace FBFInventory.Domain.Entity
         }
 
         public long Id { get; set; }
-        public DR DR { get; set; }
+        public virtual DR DR { get; set; }
         public string DRNumber { get; set; }
         public DateTime Date { get; set; }
         public string ProjectEngineer { get; set; }

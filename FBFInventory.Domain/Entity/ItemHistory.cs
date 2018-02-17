@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FBFInventory.Domain.Entity
 {
     public class ItemHistory
     {
         public int Id { get; set; }
+        [ForeignKey("Item")]
+        public long Item_Id { get; set; }
         public Item Item { get; set; }
 
         public double BeginningQuantity { get; set; }
@@ -21,6 +24,7 @@ namespace FBFInventory.Domain.Entity
         public double EndingFeet { get; set; }
 
         public DateTime DateAdded { get; set; }
+        public bool IsMistaken { get; set; }
 
         public string Note { get; set; }
 
@@ -31,5 +35,47 @@ namespace FBFInventory.Domain.Entity
         public InOrOut InOrOut { get; set; }
 
         public ReceiptType Type { get; set; }
+
+        public double AppopriateBeginningQty{
+            get{
+                double qty = 0;
+                if (MeasuredBy == MeasuredBy.Quantity)
+                    qty = BeginningQuantity;
+                if (MeasuredBy == MeasuredBy.Meters)
+                    qty = BeginningMeters;
+                if (MeasuredBy == MeasuredBy.Feet)
+                    qty = BeginningFeet;
+
+                return qty;
+            }
+        }
+
+        public double AppopriateQty{
+            get{
+                double qty = 0;
+                if (MeasuredBy == MeasuredBy.Quantity)
+                    qty = Quantity;
+                if (MeasuredBy == MeasuredBy.Meters)
+                    qty = Meters;
+                if (MeasuredBy == MeasuredBy.Feet)
+                    qty = Feet;
+
+                return qty;
+            }
+        }
+
+        public double AppopriateEndingQty{
+            get{
+                double qty = 0;
+                if (MeasuredBy == MeasuredBy.Quantity)
+                    qty = EndingQuantity;
+                if (MeasuredBy == MeasuredBy.Meters)
+                    qty = EndingMeters;
+                if (MeasuredBy == MeasuredBy.Feet)
+                    qty = EndingFeet;
+
+                return qty;
+            }
+        }
     }
 }

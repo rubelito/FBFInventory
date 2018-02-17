@@ -47,7 +47,9 @@
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label3 = new System.Windows.Forms.Label();
             this.cmdSearchReturnHistories = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.rbReturnedDescending = new System.Windows.Forms.RadioButton();
@@ -83,18 +85,28 @@
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.maintenancePage = new System.Windows.Forms.TabPage();
             this.cmdItem = new System.Windows.Forms.Button();
             this.cmdShowCategory = new System.Windows.Forms.Button();
             this.cmdShowCustomer = new System.Windows.Forms.Button();
             this.cmdShowSupplier = new System.Windows.Forms.Button();
+            this.ReportPage = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.cmdPrintForWeekly = new System.Windows.Forms.Button();
+            this.dtpWeeklyTo = new System.Windows.Forms.DateTimePicker();
+            this.dtpWeeklyFrom = new System.Windows.Forms.DateTimePicker();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cmdPrintForDaily = new System.Windows.Forms.Button();
+            this.dtpDaily = new System.Windows.Forms.DateTimePicker();
+            this.label4 = new System.Windows.Forms.Label();
             this.cmdFirst = new System.Windows.Forms.Button();
             this.cmdPrevious = new System.Windows.Forms.Button();
             this.lblNavigation = new System.Windows.Forms.Label();
             this.cmdNext = new System.Windows.Forms.Button();
             this.cmdLast = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.cmdPrintItem = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.drPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -104,6 +116,9 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.maintenancePage.SuspendLayout();
+            this.ReportPage.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -112,6 +127,7 @@
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.itemPage);
             this.tabControl.Controls.Add(this.maintenancePage);
+            this.tabControl.Controls.Add(this.ReportPage);
             this.tabControl.Location = new System.Drawing.Point(22, 12);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
@@ -242,7 +258,8 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader18});
             this.listViewDr.FullRowSelect = true;
             this.listViewDr.GridLines = true;
             this.listViewDr.Location = new System.Drawing.Point(7, 94);
@@ -278,6 +295,11 @@
             this.columnHeader5.Text = "Date";
             this.columnHeader5.Width = 174;
             // 
+            // columnHeader18
+            // 
+            this.columnHeader18.Text = "Return History";
+            this.columnHeader18.Width = 88;
+            // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.label3);
@@ -294,6 +316,15 @@
             this.tabPage1.TabIndex = 4;
             this.tabPage1.Text = "Returned Items";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(75, 62);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 13);
+            this.label3.TabIndex = 33;
+            this.label3.Text = "DR :";
             // 
             // cmdSearchReturnHistories
             // 
@@ -579,13 +610,12 @@
             this.listViewItem.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader6,
             this.columnHeader7,
-            this.columnHeader8,
             this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader11});
+            this.columnHeader8,
+            this.columnHeader10});
             this.listViewItem.FullRowSelect = true;
             this.listViewItem.GridLines = true;
-            this.listViewItem.Location = new System.Drawing.Point(3, 102);
+            this.listViewItem.Location = new System.Drawing.Point(3, 104);
             this.listViewItem.MultiSelect = false;
             this.listViewItem.Name = "listViewItem";
             this.listViewItem.Size = new System.Drawing.Size(721, 350);
@@ -616,11 +646,6 @@
             // 
             this.columnHeader10.Text = "Threshold";
             this.columnHeader10.Width = 149;
-            // 
-            // columnHeader11
-            // 
-            this.columnHeader11.Text = "History";
-            this.columnHeader11.Width = 82;
             // 
             // maintenancePage
             // 
@@ -676,6 +701,112 @@
             this.cmdShowSupplier.UseVisualStyleBackColor = true;
             this.cmdShowSupplier.Click += new System.EventHandler(this.cmdShowSupplier_Click);
             // 
+            // ReportPage
+            // 
+            this.ReportPage.Controls.Add(this.groupBox6);
+            this.ReportPage.Controls.Add(this.groupBox5);
+            this.ReportPage.Location = new System.Drawing.Point(4, 22);
+            this.ReportPage.Name = "ReportPage";
+            this.ReportPage.Padding = new System.Windows.Forms.Padding(3);
+            this.ReportPage.Size = new System.Drawing.Size(730, 455);
+            this.ReportPage.TabIndex = 5;
+            this.ReportPage.Text = "Report";
+            this.ReportPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.cmdPrintForWeekly);
+            this.groupBox6.Controls.Add(this.dtpWeeklyTo);
+            this.groupBox6.Controls.Add(this.dtpWeeklyFrom);
+            this.groupBox6.Controls.Add(this.label6);
+            this.groupBox6.Controls.Add(this.label5);
+            this.groupBox6.Location = new System.Drawing.Point(18, 163);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(272, 121);
+            this.groupBox6.TabIndex = 1;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Weekly";
+            // 
+            // cmdPrintForWeekly
+            // 
+            this.cmdPrintForWeekly.Location = new System.Drawing.Point(53, 79);
+            this.cmdPrintForWeekly.Name = "cmdPrintForWeekly";
+            this.cmdPrintForWeekly.Size = new System.Drawing.Size(75, 23);
+            this.cmdPrintForWeekly.TabIndex = 4;
+            this.cmdPrintForWeekly.Text = "Print";
+            this.cmdPrintForWeekly.UseVisualStyleBackColor = true;
+            this.cmdPrintForWeekly.Click += new System.EventHandler(this.cmdPrintForWeekly_Click);
+            // 
+            // dtpWeeklyTo
+            // 
+            this.dtpWeeklyTo.Location = new System.Drawing.Point(53, 52);
+            this.dtpWeeklyTo.Name = "dtpWeeklyTo";
+            this.dtpWeeklyTo.Size = new System.Drawing.Size(200, 20);
+            this.dtpWeeklyTo.TabIndex = 3;
+            // 
+            // dtpWeeklyFrom
+            // 
+            this.dtpWeeklyFrom.Location = new System.Drawing.Point(53, 20);
+            this.dtpWeeklyFrom.Name = "dtpWeeklyFrom";
+            this.dtpWeeklyFrom.Size = new System.Drawing.Size(200, 20);
+            this.dtpWeeklyFrom.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(20, 58);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(26, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "To :";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(14, 26);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(36, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "From :";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.cmdPrintForDaily);
+            this.groupBox5.Controls.Add(this.dtpDaily);
+            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Location = new System.Drawing.Point(18, 22);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(272, 110);
+            this.groupBox5.TabIndex = 0;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Daily";
+            // 
+            // cmdPrintForDaily
+            // 
+            this.cmdPrintForDaily.Location = new System.Drawing.Point(53, 64);
+            this.cmdPrintForDaily.Name = "cmdPrintForDaily";
+            this.cmdPrintForDaily.Size = new System.Drawing.Size(75, 23);
+            this.cmdPrintForDaily.TabIndex = 2;
+            this.cmdPrintForDaily.Text = "Print";
+            this.cmdPrintForDaily.UseVisualStyleBackColor = true;
+            this.cmdPrintForDaily.Click += new System.EventHandler(this.cmdPrintForDaily_Click);
+            // 
+            // dtpDaily
+            // 
+            this.dtpDaily.Location = new System.Drawing.Point(53, 37);
+            this.dtpDaily.Name = "dtpDaily";
+            this.dtpDaily.Size = new System.Drawing.Size(200, 20);
+            this.dtpDaily.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(14, 37);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Day :";
+            // 
             // cmdFirst
             // 
             this.cmdFirst.Location = new System.Drawing.Point(26, 511);
@@ -725,20 +856,22 @@
             this.cmdLast.UseVisualStyleBackColor = true;
             this.cmdLast.Click += new System.EventHandler(this.cmdLast_Click);
             // 
-            // label3
+            // cmdPrintItem
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(75, 62);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 13);
-            this.label3.TabIndex = 33;
-            this.label3.Text = "DR :";
+            this.cmdPrintItem.Location = new System.Drawing.Point(262, 511);
+            this.cmdPrintItem.Name = "cmdPrintItem";
+            this.cmdPrintItem.Size = new System.Drawing.Size(75, 23);
+            this.cmdPrintItem.TabIndex = 29;
+            this.cmdPrintItem.Text = "Print";
+            this.cmdPrintItem.UseVisualStyleBackColor = true;
+            this.cmdPrintItem.Click += new System.EventHandler(this.cmdPrintItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(772, 546);
+            this.Controls.Add(this.cmdPrintItem);
             this.Controls.Add(this.cmdFirst);
             this.Controls.Add(this.cmdPrevious);
             this.Controls.Add(this.lblNavigation);
@@ -765,6 +898,11 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.maintenancePage.ResumeLayout(false);
+            this.ReportPage.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -820,7 +958,6 @@
         private System.Windows.Forms.RadioButton rbInactive;
         private System.Windows.Forms.RadioButton rbActive;
         private System.Windows.Forms.RadioButton rbAll;
-        private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.Button cmdViewHistory;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button cmdEditReturn;
@@ -838,5 +975,18 @@
         private System.Windows.Forms.RadioButton rbReturnedDescending;
         private System.Windows.Forms.RadioButton rbReturnedAscending;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ColumnHeader columnHeader18;
+        private System.Windows.Forms.TabPage ReportPage;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button cmdPrintForWeekly;
+        private System.Windows.Forms.DateTimePicker dtpWeeklyTo;
+        private System.Windows.Forms.DateTimePicker dtpWeeklyFrom;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Button cmdPrintForDaily;
+        private System.Windows.Forms.DateTimePicker dtpDaily;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button cmdPrintItem;
     }
 }

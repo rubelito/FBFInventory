@@ -27,10 +27,12 @@ namespace FBFInventory.Domain.History
             }
 
             h.DateAdded = DateTime.Now;
+            //h.DateAdded = new DateTime(2018, 2, 9, 1,1,1);
             h.InOrOut = param.InOrOut;
             h.Type = param.Type;
             h.Note = param.Note;
             h.DR = param.DR;
+            h.IsMistaken = param.IsMistaken;
             
             return h;
         }

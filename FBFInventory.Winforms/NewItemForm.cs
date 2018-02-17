@@ -107,7 +107,7 @@ namespace FBFInventory.Winforms
             p.ShouldFilterByStatus = false;
             p.ShouldIncludeSupplierAndCustomer = true;
 
-            ItemSearchResult result = _itemService.SearchItems(p);
+            ItemSearchResult result = _itemService.SearchItemsWithPaging(p);
 
             _items = result.Results;
             PopulateListview(result.Results);
@@ -191,8 +191,8 @@ namespace FBFInventory.Winforms
                 item.Supplier = _selectedSupplier;
                 item.MeasuredBy = _measuredBy;
 
-                item.Threshold = Convert.ToDouble(txtThreshold.Text);
-                item.Cost = Convert.ToDouble(txtCost.Text);
+                item.Threshold = SetDefaultIfNull(txtThreshold.Text);
+                item.Cost = SetDefaultIfNull(txtCost.Text);
 
                 _categoryService.AddNewItem(item, _selectedCategoryId);
                 MessageBox.Show("Item Added!");
@@ -203,8 +203,8 @@ namespace FBFInventory.Winforms
                 _selectedItem.Category = _categories.FirstOrDefault(c => c.Id == _selectedCategoryId);
                 _selectedItem.Supplier = _selectedSupplier;
                 _selectedItem.MeasuredBy = _measuredBy;
-                _selectedItem.Threshold = Convert.ToDouble(txtThreshold.Text);
-                _selectedItem.Cost = Convert.ToDouble(txtCost.Text);
+                _selectedItem.Threshold = SetDefaultIfNull(txtThreshold.Text);
+                _selectedItem.Cost = SetDefaultIfNull(txtCost.Text);
                 _selectedItem.IsPhaseOut = chkPhaseOut.Checked;
 
                 _itemService.Edit(_selectedItem);
@@ -215,6 +215,13 @@ namespace FBFInventory.Winforms
 
             SearchItem();
             ClearFields();
+        }
+
+        private double SetDefaultIfNull(string value){
+            if (string.IsNullOrWhiteSpace(value))
+                return 0;
+
+            return Convert.ToDouble(value);
         }
 
         private void cmdCancel_Click(object sender, EventArgs e){

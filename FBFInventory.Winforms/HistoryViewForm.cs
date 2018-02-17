@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using FBFInventory.Domain.Entity;
 using FBFInventory.Infrastructure.Dto;
 using FBFInventory.Infrastructure.Service;
+using FBFInventory.Winforms.Report;
 
 namespace FBFInventory.Winforms
 {
@@ -15,9 +17,11 @@ namespace FBFInventory.Winforms
 
         private List<ItemHistory> _histories;
 
-        private int _pageSize = 3;
+        private int _pageSize = 20;
         private int _currentPage = 1;
         private int _pageCount = 1;
+
+        private bool _searchWithDate;
 
         public HistoryViewForm(HistoryService historyService, Item item){
             _historyService = historyService;
@@ -27,8 +31,10 @@ namespace FBFInventory.Winforms
 
         private void HistoryView_Load(object sender, EventArgs e){
             ChangeColumnTextForAppopriateMeasurement();
+            _searchWithDate = false;
             SearchHistory();
             lblItemDesc.Text = _item.Name;
+            lblMeasuredBy.Text = _item.MeasuredBy.ToString();
         }
 
         private void ChangeColumnTextForAppopriateMeasurement(){
@@ -54,19 +60,27 @@ namespace FBFInventory.Winforms
         }
 
         private void SearchHistory(){
-            SearchParam p = new SearchParam();
-            p.CurrentPage = _currentPage - 1;
-            p.PageSize = _pageSize;
-            p.ItemId = _item.Id;
+            SearchParam p = MakeSearchParameter();
 
-            p.OrderBy = OrdeBy.Descending;
-
-            HistorySearchResult r = _historyService.SearchHistories(p);
+            HistorySearchResult r = _historyService.SearchHistoriesWithPaging(p);
             _histories = r.Results;
             LoadHistoryToListView();
             _pageCount = r.PageCount;
 
             SetNavigationText();
+        }
+
+        private SearchParam MakeSearchParameter(){
+            SearchParam p = new SearchParam();
+            p.CurrentPage = _currentPage - 1;
+            p.PageSize = _pageSize;
+            p.ItemId = _item.Id;
+            p.SearchWithDate = _searchWithDate;
+            p.From = dateTimePicker1.Value;
+            p.To = dateTimePicker1.Value.AddDays(1);
+
+            p.OrderBy = OrdeBy.Descending;
+            return p;
         }
 
         private void LoadHistoryToListView(){
@@ -86,21 +100,9 @@ namespace FBFInventory.Winforms
                     }
                 }
 
-                if (h.MeasuredBy == MeasuredBy.Quantity){
-                    arr[4] = Convert.ToString(h.BeginningQuantity);
-                    arr[5] = Convert.ToString(h.Quantity);
-                    arr[6] = Convert.ToString(h.EndingQuantity);
-                }
-                else if (h.MeasuredBy == MeasuredBy.Meters){
-                    arr[4] = Convert.ToString(h.BeginningMeters);
-                    arr[5] = Convert.ToString(h.Meters);
-                    arr[6] = Convert.ToString(h.EndingMeters);
-                }
-                else if (h.MeasuredBy == MeasuredBy.Feet){
-                    arr[4] = Convert.ToString(h.BeginningFeet);
-                    arr[5] = Convert.ToString(h.Feet);
-                    arr[6] = Convert.ToString(h.BeginningFeet);
-                }
+                arr[4] = Convert.ToString(h.AppopriateBeginningQty);
+                arr[5] = Convert.ToString(h.AppopriateQty);
+                arr[6] = Convert.ToString(h.AppopriateEndingQty);
                 arr[7] = h.DateAdded.ToString();
 
                 if (string.IsNullOrEmpty(h.Note)){
@@ -117,6 +119,9 @@ namespace FBFInventory.Winforms
                     lit.BackColor = Color.PaleGreen;
                 else if (h.InOrOut == InOrOut.Out)
                     lit.BackColor = Color.LightCoral;
+
+                if (h.IsMistaken)
+                    lit.BackColor = Color.Orange;
 
                 listView1.Items.Add(lit);
             }
@@ -152,6 +157,38 @@ namespace FBFInventory.Winforms
 
         private void cmdClose_Click(object sender, EventArgs e){
             this.Close();
+        }
+
+        private void cmdDrSearch_Click(object sender, EventArgs e){
+            _searchWithDate = true;
+            SearchHistory();
+        }
+
+        private void cmdPrint_Click(object sender, EventArgs e){
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel Documents (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = _item.Name + " Histories";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK){
+                try{
+                    GenerateExcelReport(saveFileDialog.FileName);
+                    MessageBox.Show("Report Generated!");
+                }
+                catch (Exception ex){
+                    MessageBox.Show(ex.Message, "Error Exporting Report");
+                }
+            }
+        }
+
+        private void GenerateExcelReport(string fileName){
+            ItemReportDTO dto = new ItemReportDTO();
+            dto.ItemName = _item.Name;
+            dto.MeasuredBy = _item.MeasuredBy.ToString();
+
+            SearchParam p = MakeSearchParameter();
+            dto.ItemHistories = _historyService.SearchHistories(p);
+
+            ItemHistoryReporter reporter = new ItemHistoryReporter(dto, fileName);
+            reporter.Export();
         }
     }
 }

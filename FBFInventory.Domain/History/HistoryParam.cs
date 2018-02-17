@@ -13,5 +13,6 @@ namespace FBFInventory.Domain.History
         public string Note { get; set; }
         public DR DR { get; set; }
         public InOrOut InOrOut { get; set; }
+        public bool IsMistaken { get; set; }
     }
 }

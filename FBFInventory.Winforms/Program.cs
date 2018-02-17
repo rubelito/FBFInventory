@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using FBFInventory.Domain.Entity;
+using FBFInventory.Infrastructure.Dto;
 using FBFInventory.Infrastructure.EntityFramework;
+using FBFInventory.Infrastructure.ReportPoco;
 using FBFInventory.Infrastructure.Service;
 using FBFInventory.Winforms.Helper;
+using FBFInventory.Winforms.Report;
 using log4net;
 using log4net.Config;
 
@@ -49,19 +52,42 @@ namespace FBFInventory.Winforms
             //List<Item> items = itemService.AllActiveItems();
             //Application.Run(new ItemBrowserForm(items));
 
-            DRParam p = new DRParam();
+            //DRParam p = new DRParam();
 
-            p.Operation = op;
-            p.ReceiptType = receiptType;
-            p.SC = sc;
+            //p.Operation = op;
+            //p.ReceiptType = receiptType;
+            //p.SC = sc;
+
+            // SearchParam p = new SearchParam();
+            //p.CurrentPage = 0;
+            //p.PageSize = 25;
+            //p.ItemId = 3;
+            //p.SearchWithDate = false;
+            ////p.From = dateTimePicker1.Value;
+            ////p.To = dateTimePicker1.Value.AddDays(1);
+
+            //p.OrderBy = OrdeBy.Descending;
+
+            //HistorySearchResult r = historyService.SearchHistoriesWithPaging(p);
+
+            //ItemReportDTO dto = new ItemReportDTO();
+            //dto.ItemName = "LP32 Nut";
+            //dto.MeasuredBy = "Quantity";
+            //dto.ItemHistories = r.Results;
+
+            //ItemHistoryReporter reporter = 
+            //    new ItemHistoryReporter(dto, @"C:\Users\Ruby\Desktop\report.xlsx");
+
+            //reporter.Export();
+
            // p.SelectedDR = context.DRs.FirstOrDefault(d => d.Id == 7);
 
-            //Application.Run(new InWithDRForm(itemService, supplierService, customerService, 
-              //  drService, inOutService, p));
+            //Application.Run(new InWithDRForm(itemService, supplierService, customerService,
+            //    drService, inOutService, p));
 
-           // Application.Run(new NewItemForm(supplierService, categoryService, itemService));         
-           // Application.Run(new InOutWithOutDRForm(itemService, inOutService, 
-             //   historyService, InOrOut.In));
+            //Application.Run(new NewItemForm(supplierService, categoryService, itemService));
+            //Application.Run(new InOutWithOutDRForm(itemService, inOutService,
+            //    historyService, InOrOut.In));
 
             try{
                 Application.Run(new MainForm());
@@ -74,9 +100,30 @@ namespace FBFInventory.Winforms
                 //ReturnedItemForm f = new ReturnedItemForm(h,
                   //  itemService, returnedHistoryService, inOutService, drService);
                 //f.ShowDialog();
+
+                //HistoryReportService s = new HistoryReportService(itemService, historyService);
+                //DateTime now = new DateTime(2018, 2, 9);
+                //var record = s.GetDailyReport(now);
+
+                //DailyReporter reporter =
+                //    new DailyReporter(record, @"C:\Users\Ruby\Desktop\dailyReport.xlsx");
+
+                //reporter.Export();
+
+                //WeeklyHistoryReportService s = new WeeklyHistoryReportService(itemService, historyService);
+                //WeeklyReportDTO dto =
+                //    s.GetWeeklyReport(new DateTime(2018, 2, 4), new DateTime(2018, 2, 10));
+
+                //WeeklyReporter reporter = new WeeklyReporter(dto, @"C:\Users\Ruby\Desktop\weekly.xlsx");
+                //reporter.Export();
+
             }
             catch (Exception ex){
-                Log.Error(ex);
+                if (ex.InnerException != null)
+                    Log.Error(ex.InnerException.InnerException);
+                else{
+                    Log.Error(ex);
+                }
                 throw;
             }
             Log.Info("Program Ended - " + DateTime.Now);

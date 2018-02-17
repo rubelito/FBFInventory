@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.grdSupplierCustomer = new System.Windows.Forms.GroupBox();
+            this.txtVehicleNumber = new System.Windows.Forms.TextBox();
+            this.txtDeliveredBy = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.txtProject = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -47,7 +51,7 @@
             this.cmdInOut = new System.Windows.Forms.Button();
             this.lblMeasuredBy1 = new System.Windows.Forms.Label();
             this.txtQty = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.lblInOut = new System.Windows.Forms.Label();
             this.lblMeasuredBy = new System.Windows.Forms.Label();
             this.lblCurrentQty = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -62,12 +66,17 @@
             this.cmdClose = new System.Windows.Forms.Button();
             this.cmdSaveEdit = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
+            this.cmdPrint = new System.Windows.Forms.Button();
             this.grdSupplierCustomer.SuspendLayout();
             this.grdItems.SuspendLayout();
             this.SuspendLayout();
             // 
             // grdSupplierCustomer
             // 
+            this.grdSupplierCustomer.Controls.Add(this.txtVehicleNumber);
+            this.grdSupplierCustomer.Controls.Add(this.txtDeliveredBy);
+            this.grdSupplierCustomer.Controls.Add(this.label11);
+            this.grdSupplierCustomer.Controls.Add(this.label10);
             this.grdSupplierCustomer.Controls.Add(this.txtAddress);
             this.grdSupplierCustomer.Controls.Add(this.txtProject);
             this.grdSupplierCustomer.Controls.Add(this.label9);
@@ -82,24 +91,56 @@
             this.grdSupplierCustomer.Controls.Add(this.label1);
             this.grdSupplierCustomer.Location = new System.Drawing.Point(12, 12);
             this.grdSupplierCustomer.Name = "grdSupplierCustomer";
-            this.grdSupplierCustomer.Size = new System.Drawing.Size(444, 173);
+            this.grdSupplierCustomer.Size = new System.Drawing.Size(512, 173);
             this.grdSupplierCustomer.TabIndex = 0;
             this.grdSupplierCustomer.TabStop = false;
             this.grdSupplierCustomer.Text = "Supplier DR";
+            // 
+            // txtVehicleNumber
+            // 
+            this.txtVehicleNumber.Location = new System.Drawing.Point(374, 137);
+            this.txtVehicleNumber.Name = "txtVehicleNumber";
+            this.txtVehicleNumber.Size = new System.Drawing.Size(132, 20);
+            this.txtVehicleNumber.TabIndex = 6;
+            // 
+            // txtDeliveredBy
+            // 
+            this.txtDeliveredBy.Location = new System.Drawing.Point(374, 104);
+            this.txtDeliveredBy.Name = "txtDeliveredBy";
+            this.txtDeliveredBy.Size = new System.Drawing.Size(132, 20);
+            this.txtDeliveredBy.TabIndex = 5;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(279, 143);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(88, 13);
+            this.label11.TabIndex = 18;
+            this.label11.Text = "Vehicle Number :";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(294, 109);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(73, 13);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "Delivered By :";
             // 
             // txtAddress
             // 
             this.txtAddress.Location = new System.Drawing.Point(72, 106);
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(195, 20);
-            this.txtAddress.TabIndex = 16;
+            this.txtAddress.TabIndex = 3;
             // 
             // txtProject
             // 
             this.txtProject.Location = new System.Drawing.Point(72, 80);
             this.txtProject.Name = "txtProject";
             this.txtProject.Size = new System.Drawing.Size(155, 20);
-            this.txtProject.TabIndex = 15;
+            this.txtProject.TabIndex = 2;
             // 
             // label9
             // 
@@ -133,14 +174,14 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(72, 137);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 11;
+            this.dateTimePicker1.TabIndex = 4;
             // 
             // txtNote
             // 
             this.txtNote.Location = new System.Drawing.Point(273, 37);
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
-            this.txtNote.Size = new System.Drawing.Size(165, 76);
+            this.txtNote.Size = new System.Drawing.Size(233, 63);
             this.txtNote.TabIndex = 10;
             // 
             // label2
@@ -203,7 +244,7 @@
             this.grdItems.Controls.Add(this.cmdInOut);
             this.grdItems.Controls.Add(this.lblMeasuredBy1);
             this.grdItems.Controls.Add(this.txtQty);
-            this.grdItems.Controls.Add(this.label6);
+            this.grdItems.Controls.Add(this.lblInOut);
             this.grdItems.Controls.Add(this.lblMeasuredBy);
             this.grdItems.Controls.Add(this.lblCurrentQty);
             this.grdItems.Controls.Add(this.label5);
@@ -255,14 +296,14 @@
             this.txtQty.TabIndex = 8;
             this.txtQty.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQty_KeyPress);
             // 
-            // label6
+            // lblInOut
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(23, 316);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(32, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Add :";
+            this.lblInOut.AutoSize = true;
+            this.lblInOut.Location = new System.Drawing.Point(23, 316);
+            this.lblInOut.Name = "lblInOut";
+            this.lblInOut.Size = new System.Drawing.Size(32, 13);
+            this.lblInOut.TabIndex = 7;
+            this.lblInOut.Text = "Add :";
             // 
             // lblMeasuredBy
             // 
@@ -384,11 +425,22 @@
             this.cmdCancel.UseVisualStyleBackColor = true;
             this.cmdCancel.Click += new System.EventHandler(this.cmdCancel_Click);
             // 
+            // cmdPrint
+            // 
+            this.cmdPrint.Location = new System.Drawing.Point(393, 191);
+            this.cmdPrint.Name = "cmdPrint";
+            this.cmdPrint.Size = new System.Drawing.Size(75, 23);
+            this.cmdPrint.TabIndex = 11;
+            this.cmdPrint.Text = "Print";
+            this.cmdPrint.UseVisualStyleBackColor = true;
+            this.cmdPrint.Click += new System.EventHandler(this.cmdPrint_Click);
+            // 
             // InWithDRForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 595);
+            this.ClientSize = new System.Drawing.Size(541, 595);
+            this.Controls.Add(this.cmdPrint);
             this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.cmdClose);
             this.Controls.Add(this.cmdSaveEdit);
@@ -429,7 +481,7 @@
         private System.Windows.Forms.Button cmdInOut;
         private System.Windows.Forms.Label lblMeasuredBy1;
         private System.Windows.Forms.TextBox txtQty;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblInOut;
         private System.Windows.Forms.Label lblMeasuredBy;
         private System.Windows.Forms.Label lblCurrentQty;
         private System.Windows.Forms.Label label5;
@@ -445,5 +497,10 @@
         private System.Windows.Forms.TextBox txtProject;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtVehicleNumber;
+        private System.Windows.Forms.TextBox txtDeliveredBy;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button cmdPrint;
     }
 }

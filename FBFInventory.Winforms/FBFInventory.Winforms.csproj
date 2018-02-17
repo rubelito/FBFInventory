@@ -32,6 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.87.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ClosedXML.0.87.1\lib\net40\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
@@ -83,6 +90,7 @@
       <DependentUpon>DRBrowserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\DialogParam.cs" />
+    <Compile Include="Helper\DialogResult.cs" />
     <Compile Include="Helper\DRParam.cs" />
     <Compile Include="Helper\ItemListViewDto.cs" />
     <Compile Include="Helper\Operation.cs" />
@@ -131,6 +139,12 @@
     <Compile Include="RemoveItemDialog.Designer.cs">
       <DependentUpon>RemoveItemDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Report\DailyReporter.cs" />
+    <Compile Include="Report\DRReporter.cs" />
+    <Compile Include="Report\ItemHistoryReporter.cs" />
+    <Compile Include="Report\ItemReportDTO.cs" />
+    <Compile Include="Report\ItemsReporter.cs" />
+    <Compile Include="Report\WeeklyReporter.cs" />
     <Compile Include="ReturnedItemForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -46,7 +46,7 @@ namespace FBFInventory.Infrastructure.Service
             SaveChanges("AddScrap");
         }
 
-        public void AddReturnedItem(long historyId, ReturnedItem item){
+        public void AddReturnedGoodItem(long historyId, ReturnedItem item){
             ReturnedHistory parentHistory = _context.ReturnedHistories.FirstOrDefault(h => h.Id == historyId);
 
             parentHistory.GoodItems.Add(item);
@@ -54,9 +54,9 @@ namespace FBFInventory.Infrastructure.Service
         }
 
         public void DeleteGoodItem(long itemId){
-            ReturnedItem itemToRemove = _context.ReturnedItems.FirstOrDefault(i => i.Id == itemId);
+            ReturnedItem itemToRemove = _context.GoodItems.FirstOrDefault(i => i.Id == itemId);
 
-            _context.ReturnedItems.Remove(itemToRemove);
+            _context.GoodItems.Remove(itemToRemove);
             SaveChanges("DeleteGoodItems");
         }
 

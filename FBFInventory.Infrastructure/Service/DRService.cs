@@ -36,9 +36,13 @@ namespace FBFInventory.Infrastructure.Service
             else if (oldDr.Type == ReceiptType.DR){
                 oldDr.DRNumber = dToEdit.DRNumber;
                 oldDr.Customer = dToEdit.Customer;
+                oldDr.Project = dToEdit.Project;
+                oldDr.DeliveryAddress = dToEdit.DeliveryAddress;
+                oldDr.DeliveredBy = dToEdit.DeliveredBy;
+                oldDr.VehiclePlateNumber = dToEdit.VehiclePlateNumber;
             }
             oldDr.Note = dToEdit.Note;
-            oldDr.Date = dToEdit.Date;
+            oldDr.Date = dToEdit.Date;           
 
             SaveChanges("Edit");
         }
@@ -62,6 +66,10 @@ namespace FBFInventory.Infrastructure.Service
             return _context.DRs.FirstOrDefault(d => d.Id == id);
         }
 
+        public DR GetDRWithItems(long id){
+            return _context.DRs.Include("Items").FirstOrDefault(d => d.Id == id);
+        }
+
         public List<DRItem> GetItemsWithinDR(long id){
             return _context.DRItems.Include("Item").Where(d => d.DR.Id == id).ToList();
         }
@@ -71,7 +79,8 @@ namespace FBFInventory.Infrastructure.Service
         }
 
         public DRSearchResult DRSearch(SearchParam param){
-            IQueryable<DR> query = _context.DRs.AsNoTracking();
+            IQueryable<DR> query = _context.DRs.Include("ReturnedHistory").AsNoTracking();
+
             DRSearchResult r = new DRSearchResult();
 
             query = ApplyCondition(param, query);

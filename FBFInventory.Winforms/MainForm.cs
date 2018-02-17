@@ -8,6 +8,7 @@ using FBFInventory.Infrastructure.Dto;
 using FBFInventory.Infrastructure.EntityFramework;
 using FBFInventory.Infrastructure.Service;
 using FBFInventory.Winforms.Helper;
+using FBFInventory.Winforms.Report;
 
 namespace FBFInventory.Winforms
 {
@@ -28,7 +29,7 @@ namespace FBFInventory.Winforms
 
         private List<DR> _Drs;
         private List<Item> _items;
-        private List<ReturnedHistory> _returnedHistories; 
+        private List<ReturnedHistory> _returnedHistories;
 
         private string _navigationTextForDr;
         private string _navigationTextForItem;
@@ -80,7 +81,7 @@ namespace FBFInventory.Winforms
         private void LoadDRToListView(){
             listViewDr.Items.Clear();
             foreach (var i in _Drs){
-                string[] arr = new string[5];
+                string[] arr = new string[6];
                 arr[0] = Convert.ToString(i.Id);
                 if (i.Type == ReceiptType.SDR){
                     arr[1] = Convert.ToString(i.SDRNumber);
@@ -92,6 +93,8 @@ namespace FBFInventory.Winforms
                 }
                 arr[3] = Convert.ToString(Convert.ToString(i.Type));
                 arr[4] = i.Date.ToString();
+                if (i.HasReturnedHistory)
+                    arr[5] = "Yes";
 
                 ListViewItem lit = new ListViewItem(arr);
                 listViewDr.Items.Add(lit);
@@ -212,10 +215,8 @@ namespace FBFInventory.Winforms
             }
         }
 
-        private void NextForReturnedItems()
-        {
-            if (_returnCurrentPage < _returnPageCount)
-            {
+        private void NextForReturnedItems(){
+            if (_returnCurrentPage < _returnPageCount){
                 _returnCurrentPage++;
                 SearchReturnedHistory();
             }
@@ -288,7 +289,7 @@ namespace FBFInventory.Winforms
             CustomerService customerService = new CustomerService(_context);
             DRService drService = new DRService(_context);
             ReturnedHistoryService returnedHistoryService = new ReturnedHistoryService(_context);
-            InOutService inOutService = new InOutService(itemService, historyService, 
+            InOutService inOutService = new InOutService(itemService, historyService,
                 drService, returnedHistoryService);
 
             DRParam p = new DRParam();
@@ -347,7 +348,7 @@ namespace FBFInventory.Winforms
             p.OrberyBy = rbItemDescending.Checked ? OrdeBy.Descending : OrdeBy.Ascending;
 
             p.Name = txtItemSearch.Text;
-            ItemSearchResult r = service.SearchItems(p);
+            ItemSearchResult r = service.SearchItemsWithPaging(p);
             _items = r.Results;
             LoadItemtoListView();
             _itemPageCount = r.PageCount;
@@ -361,8 +362,8 @@ namespace FBFInventory.Winforms
                 string[] arr = new string[5];
                 arr[0] = Convert.ToString(i.Id);
                 arr[1] = Convert.ToString(i.Name);
-                arr[2] = Convert.ToString(i.GetAppropriateQuantity);
-                arr[3] = Convert.ToString(i.MeasuredBy);
+                arr[2] = Convert.ToString(i.MeasuredBy);
+                arr[3] = Convert.ToString(i.GetAppropriateQuantity);                
                 arr[4] = Convert.ToString(i.Threshold);
 
                 ListViewItem lit = new ListViewItem(arr);
@@ -428,7 +429,7 @@ namespace FBFInventory.Winforms
                 f.ShowDialog();
             }
             else{
-                MessageBox.Show("Please select item from list!", "", 
+                MessageBox.Show("Please select item from list!", "",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
@@ -442,14 +443,12 @@ namespace FBFInventory.Winforms
                 lblNavigation.Text = _navigationTextForDr;
             if (tabControl.SelectedIndex == 1)
                 lblNavigation.Text = _navigationTextForReturnHistories;
-            if (tabControl.SelectedIndex == 2)            
-                lblNavigation.Text = _navigationTextForItem; 
+            if (tabControl.SelectedIndex == 2)
+                lblNavigation.Text = _navigationTextForItem;
         }
 
-        private void cmdEditReturn_Click(object sender, EventArgs e)
-        {
-            if (listViewReturn.SelectedItems.Count == 0)
-            {
+        private void cmdEditReturn_Click(object sender, EventArgs e){
+            if (listViewReturn.SelectedItems.Count == 0){
                 MessageBox.Show("Please select History from the list", "",
                     MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
@@ -465,24 +464,130 @@ namespace FBFInventory.Winforms
                 drService, returnedHistoryService);
 
             ReturnedHistory h = returnedHistoryService.GetHistory(returnId);
-            ReturnedItemForm f = new ReturnedItemForm(h,
-                    itemService, returnedHistoryService, inOutService, drService);
+            ReturnedItemForm f = new ReturnedItemForm(h, returnedHistoryService,
+                inOutService, drService);
             f.ShowDialog();
         }
 
-        private void cmdCreateReturn_Click(object sender, EventArgs e)
-        {
+        private void cmdCreateReturn_Click(object sender, EventArgs e){
             ItemService itemService = new ItemService(_context);
             HistoryService historyService = new HistoryService(_context);
             ReturnedHistoryService returnedHistoryService = new ReturnedHistoryService(_context);
             DRService drService = new DRService(_context);
 
-            InOutService inOutService = new InOutService(itemService, historyService, 
+            InOutService inOutService = new InOutService(itemService, historyService,
                 drService, returnedHistoryService);
 
-            ReturnedItemForm f = new ReturnedItemForm(null,
-                    itemService, returnedHistoryService, inOutService, drService);
+            ReturnedItemForm f = new ReturnedItemForm(null, returnedHistoryService
+                , inOutService, drService);
             f.ShowDialog();
+        }
+
+        private void cmdPrintForDaily_Click(object sender, EventArgs e){
+            string fileName = "Daily - " + dtpDaily.Value.ToString("MMM dd, yyyy");
+            var dialogResult = OpenSaveDialog(fileName);
+
+            if (dialogResult.Result == DialogResult.OK){
+                try{
+                    GenerateDailyReport(dialogResult.FileName);
+                    MessageBox.Show("Report Generated!");
+                }
+                catch (Exception ex){
+                    MessageBox.Show(ex.Message, "Error Exporting Report");
+                }
+            }
+        }
+
+        private void GenerateDailyReport(string fileName){
+            ItemService itemService = new ItemService(_context);
+            HistoryService historyService = new HistoryService(_context);
+
+            DailyHistoryReportService s = new DailyHistoryReportService(itemService, historyService);
+            DateTime now = dtpDaily.Value.Date;
+            var record = s.GetDailyReport(now);
+
+            DailyReporter reporter =
+                new DailyReporter(record, fileName);
+
+            reporter.Export();
+        }
+
+        private void cmdPrintForWeekly_Click(object sender, EventArgs e){
+            string fileName = "Weekly " + dtpWeeklyFrom.Value.ToString("MMM dd, yyyy")
+                              + " - " + dtpWeeklyTo.Value.ToString("MMM dd, yyyy");
+
+            var dialogResult = OpenSaveDialog(fileName);
+
+            if (dialogResult.Result == DialogResult.OK){
+                try{
+                    GenerateWeeklyReport(dialogResult.FileName);
+                    MessageBox.Show("Report Generated!");
+                }
+                catch (Exception ex){
+                    MessageBox.Show(ex.Message, "Error Exporting Report");
+                }
+            }
+        }
+
+        private void GenerateWeeklyReport(string fileName){
+            ItemService itemService = new ItemService(_context);
+            HistoryService historyService = new HistoryService(_context);
+
+            WeeklyHistoryReportService s = new WeeklyHistoryReportService(itemService, historyService);
+            DateTime from = dtpWeeklyFrom.Value.Date;
+            DateTime to = dtpWeeklyTo.Value.Date;
+            var record = s.GetWeeklyReport(from, to);
+
+            WeeklyReporter reporter =
+                new WeeklyReporter(record, fileName);
+
+            reporter.Export();
+        }
+
+        private void cmdPrintItem_Click(object sender, EventArgs e){
+            string fileName = "Items - " + DateTime.Now.ToString("MMM dd, yyyy");
+
+            var dialogResult = OpenSaveDialog(fileName);
+            if (dialogResult.Result == DialogResult.OK){
+                try{
+                    GenerateItemsReport(dialogResult.FileName);
+                    MessageBox.Show("Report Generated!");
+                }
+                catch (Exception ex){
+                    MessageBox.Show(ex.Message, "Error Exporting Report");
+                }
+            }
+        }
+
+        private void GenerateItemsReport(string fileName){
+            ItemService service = new ItemService(_context);
+
+            ItemSearchParam p = new ItemSearchParam();
+            p.ShouldIncludeSupplierAndCustomer = false;
+            p.Criteria = (ItemSearchCriteria) cboItemCriteria.SelectedItem;
+
+            p.ShouldFilterByStatus = !rbAll.Checked;
+            p.ActiveOnly = rbActive.Checked;
+            p.OrberyBy = rbItemDescending.Checked ? OrdeBy.Descending : OrdeBy.Ascending;
+
+            p.Name = txtItemSearch.Text;
+            var items = service.SearchItems(p);
+
+            ItemsReporter reporter = new ItemsReporter(items, fileName);
+            reporter.Export();
+        }
+
+        private SaveDialogResult OpenSaveDialog(string fileName){
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel Documents (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = fileName;
+
+            SaveDialogResult r = new SaveDialogResult();
+
+            r.Result = saveFileDialog.ShowDialog();
+            r.FileName = saveFileDialog.FileName;
+
+            return r;
         }
     }
 }

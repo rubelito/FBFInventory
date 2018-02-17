@@ -18,7 +18,7 @@ namespace FBFInventory.Infrastructure.EntityFramework
         public DbSet<Item> Items { get; set; }
         public DbSet<DRItem> DRItems { get; set; }
         public DbSet<ReturnedHistory> ReturnedHistories { get; set; }
-        public DbSet<ReturnedItem> ReturnedItems { get; set; }
+        public DbSet<ReturnedItem> GoodItems { get; set; }
         public DbSet<ScrapItem> ScrapItems { get; set; }
 
         public DbSet<ItemHistory> ItemHistories { get; set; }
@@ -45,7 +45,9 @@ namespace FBFInventory.Infrastructure.EntityFramework
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder){
-
+            modelBuilder.Entity<DR>()
+                .HasOptional(e => e.ReturnedHistory)
+                .WithRequired(a => a.DR);
         }
     }
 }

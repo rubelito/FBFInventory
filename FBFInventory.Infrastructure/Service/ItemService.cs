@@ -57,21 +57,10 @@ namespace FBFInventory.Infrastructure.Service
             return items;
         }
 
-        public ItemSearchResult SearchItems(ItemSearchParam param){
-            IQueryable<Item> query;
-
-            if (param.ShouldIncludeSupplierAndCustomer){
-                query = _context.Items
-                    .Include("Supplier")
-                    .Include("Category");
-            }
-            else{
-                query = _context.Items;
-            }
+        public ItemSearchResult SearchItemsWithPaging(ItemSearchParam param){
+            var query = BuildQuery(param);
 
             ItemSearchResult r = new ItemSearchResult();
-
-            query = ApplyConditions(param, query);
 
             r.TotalItems = query.Count();
             r.PageCount = (int)Math.Ceiling((double)r.TotalItems / param.PageSize);
@@ -85,6 +74,29 @@ namespace FBFInventory.Infrastructure.Service
 
             r.Results = query.ToList();
             return r;
+        }
+
+        public List<Item> SearchItems(ItemSearchParam param){
+            var query = BuildQuery(param);
+            query = ApplyOrderBy(param, query);
+
+            return query.ToList();
+        }
+
+        private IQueryable<Item> BuildQuery(ItemSearchParam param){
+            IQueryable<Item> query;
+
+            if (param.ShouldIncludeSupplierAndCustomer){
+                query = _context.Items
+                    .Include("Supplier")
+                    .Include("Category");
+            }
+            else{
+                query = _context.Items;
+            }
+
+            query = ApplyConditions(param, query);
+            return query;
         }
 
         private static IQueryable<Item> ApplyOrderBy(ItemSearchParam param, IQueryable<Item> query){

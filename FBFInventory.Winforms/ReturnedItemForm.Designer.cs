@@ -59,10 +59,10 @@
             this.label20 = new System.Windows.Forms.Label();
             this.cmdReturn = new System.Windows.Forms.Button();
             this.lblReturnMeasuredBy1 = new System.Windows.Forms.Label();
-            this.txtReturnQty = new System.Windows.Forms.TextBox();
+            this.txtGoodQty = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblReturnMeasuredBy = new System.Windows.Forms.Label();
-            this.lblReturnQty = new System.Windows.Forms.Label();
+            this.lblGoodMeasuredBy = new System.Windows.Forms.Label();
+            this.lblGoodQty = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.lblReturnItem = new System.Windows.Forms.Label();
@@ -73,7 +73,7 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.returnListView = new System.Windows.Forms.ListView();
+            this.goodListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -252,10 +252,10 @@
             this.grdItem.Controls.Add(this.label20);
             this.grdItem.Controls.Add(this.cmdReturn);
             this.grdItem.Controls.Add(this.lblReturnMeasuredBy1);
-            this.grdItem.Controls.Add(this.txtReturnQty);
+            this.grdItem.Controls.Add(this.txtGoodQty);
             this.grdItem.Controls.Add(this.label9);
-            this.grdItem.Controls.Add(this.lblReturnMeasuredBy);
-            this.grdItem.Controls.Add(this.lblReturnQty);
+            this.grdItem.Controls.Add(this.lblGoodMeasuredBy);
+            this.grdItem.Controls.Add(this.lblGoodQty);
             this.grdItem.Controls.Add(this.label10);
             this.grdItem.Controls.Add(this.label11);
             this.grdItem.Controls.Add(this.lblReturnItem);
@@ -263,7 +263,7 @@
             this.grdItem.Controls.Add(this.label8);
             this.grdItem.Controls.Add(this.label7);
             this.grdItem.Controls.Add(this.scrapListView);
-            this.grdItem.Controls.Add(this.returnListView);
+            this.grdItem.Controls.Add(this.goodListView);
             this.grdItem.Location = new System.Drawing.Point(13, 182);
             this.grdItem.Name = "grdItem";
             this.grdItem.Size = new System.Drawing.Size(618, 342);
@@ -320,11 +320,11 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(325, 315);
+            this.label14.Location = new System.Drawing.Point(316, 315);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(32, 13);
+            this.label14.Size = new System.Drawing.Size(41, 13);
             this.label14.TabIndex = 27;
-            this.label14.Text = "Add :";
+            this.label14.Text = "Scrap :";
             // 
             // lblScrapMeasuredBy
             // 
@@ -399,13 +399,13 @@
             this.lblReturnMeasuredBy1.TabIndex = 19;
             this.lblReturnMeasuredBy1.Text = "Qty.";
             // 
-            // txtReturnQty
+            // txtGoodQty
             // 
-            this.txtReturnQty.Location = new System.Drawing.Point(59, 312);
-            this.txtReturnQty.Name = "txtReturnQty";
-            this.txtReturnQty.Size = new System.Drawing.Size(52, 20);
-            this.txtReturnQty.TabIndex = 18;
-            this.txtReturnQty.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtReturnQty_KeyPress);
+            this.txtGoodQty.Location = new System.Drawing.Point(59, 312);
+            this.txtGoodQty.Name = "txtGoodQty";
+            this.txtGoodQty.Size = new System.Drawing.Size(52, 20);
+            this.txtGoodQty.TabIndex = 18;
+            this.txtGoodQty.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtGoodQty_KeyPress);
             // 
             // label9
             // 
@@ -416,23 +416,23 @@
             this.label9.TabIndex = 17;
             this.label9.Text = "In :";
             // 
-            // lblReturnMeasuredBy
+            // lblGoodMeasuredBy
             // 
-            this.lblReturnMeasuredBy.AutoSize = true;
-            this.lblReturnMeasuredBy.Location = new System.Drawing.Point(101, 291);
-            this.lblReturnMeasuredBy.Name = "lblReturnMeasuredBy";
-            this.lblReturnMeasuredBy.Size = new System.Drawing.Size(26, 13);
-            this.lblReturnMeasuredBy.TabIndex = 16;
-            this.lblReturnMeasuredBy.Text = "Qty.";
+            this.lblGoodMeasuredBy.AutoSize = true;
+            this.lblGoodMeasuredBy.Location = new System.Drawing.Point(101, 291);
+            this.lblGoodMeasuredBy.Name = "lblGoodMeasuredBy";
+            this.lblGoodMeasuredBy.Size = new System.Drawing.Size(26, 13);
+            this.lblGoodMeasuredBy.TabIndex = 16;
+            this.lblGoodMeasuredBy.Text = "Qty.";
             // 
-            // lblReturnQty
+            // lblGoodQty
             // 
-            this.lblReturnQty.AutoSize = true;
-            this.lblReturnQty.Location = new System.Drawing.Point(60, 291);
-            this.lblReturnQty.Name = "lblReturnQty";
-            this.lblReturnQty.Size = new System.Drawing.Size(13, 13);
-            this.lblReturnQty.TabIndex = 15;
-            this.lblReturnQty.Text = "0";
+            this.lblGoodQty.AutoSize = true;
+            this.lblGoodQty.Location = new System.Drawing.Point(60, 291);
+            this.lblGoodQty.Name = "lblGoodQty";
+            this.lblGoodQty.Size = new System.Drawing.Size(13, 13);
+            this.lblGoodQty.TabIndex = 15;
+            this.lblGoodQty.Text = "0";
             // 
             // label10
             // 
@@ -519,21 +519,21 @@
             this.columnHeader6.Text = "Qty";
             this.columnHeader6.Width = 46;
             // 
-            // returnListView
+            // goodListView
             // 
-            this.returnListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.goodListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
-            this.returnListView.FullRowSelect = true;
-            this.returnListView.GridLines = true;
-            this.returnListView.Location = new System.Drawing.Point(7, 38);
-            this.returnListView.MultiSelect = false;
-            this.returnListView.Name = "returnListView";
-            this.returnListView.Size = new System.Drawing.Size(291, 203);
-            this.returnListView.TabIndex = 0;
-            this.returnListView.UseCompatibleStateImageBehavior = false;
-            this.returnListView.View = System.Windows.Forms.View.Details;
+            this.goodListView.FullRowSelect = true;
+            this.goodListView.GridLines = true;
+            this.goodListView.Location = new System.Drawing.Point(7, 38);
+            this.goodListView.MultiSelect = false;
+            this.goodListView.Name = "goodListView";
+            this.goodListView.Size = new System.Drawing.Size(291, 203);
+            this.goodListView.TabIndex = 0;
+            this.goodListView.UseCompatibleStateImageBehavior = false;
+            this.goodListView.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader1
             // 
@@ -607,7 +607,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ListView scrapListView;
-        private System.Windows.Forms.ListView returnListView;
+        private System.Windows.Forms.ListView goodListView;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
@@ -626,10 +626,10 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button cmdReturn;
         private System.Windows.Forms.Label lblReturnMeasuredBy1;
-        private System.Windows.Forms.TextBox txtReturnQty;
+        private System.Windows.Forms.TextBox txtGoodQty;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label lblReturnMeasuredBy;
-        private System.Windows.Forms.Label lblReturnQty;
+        private System.Windows.Forms.Label lblGoodMeasuredBy;
+        private System.Windows.Forms.Label lblGoodQty;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label lblReturnItem;
