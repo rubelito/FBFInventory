@@ -139,6 +139,7 @@
     <Compile Include="RemoveItemDialog.Designer.cs">
       <DependentUpon>RemoveItemDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Report\DailyReportDetailsMaker.cs" />
     <Compile Include="Report\DailyReporter.cs" />
     <Compile Include="Report\DRReporter.cs" />
     <Compile Include="Report\ItemHistoryReporter.cs" />

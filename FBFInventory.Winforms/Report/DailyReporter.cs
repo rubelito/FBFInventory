@@ -26,6 +26,10 @@ namespace FBFInventory.Winforms.Report
 
             SetAutoAdjustColumnToContent();
 
+            DailyReportDetailsMaker detailsMaker = new DailyReportDetailsMaker(wb, _dailyReport);
+            detailsMaker.MakeInDetails();
+            detailsMaker.MakeOutDetails();
+
             wb.SaveAs(_path);
         }
 
@@ -97,14 +101,14 @@ namespace FBFInventory.Winforms.Report
             var inQty = _sheet.Cell(_rowIndex, 5);
             inQty.Value = i.In;
             inQty.Comment.Style.Alignment.SetAutomaticSize();
-            inQty.Comment.AddText(i.NotesForIn);
+            inQty.Comment.AddText(i.CommentsForIn);
             if (i.HasReturnItems)
-                inQty.Style.Fill.BackgroundColor = XLColor.Orange;
+                inQty.Style.Fill.BackgroundColor = XLColor.LightPink;
 
             var outQty = _sheet.Cell(_rowIndex, 6);
             outQty.Value = i.Out;
             outQty.Comment.Style.Alignment.SetAutomaticSize();
-            outQty.Comment.AddText(i.NotesForOut);
+            outQty.Comment.AddText(i.CommentsForOut);
 
             var ending = _sheet.Cell(_rowIndex, 7);
             ending.Value = i.EndingQty;
@@ -113,8 +117,8 @@ namespace FBFInventory.Winforms.Report
         private void DisplayLedger(){
             _rowIndex = _rowIndex + 3;
 
-            var orange = _sheet.Cell(_rowIndex, 2);
-            orange.Style.Fill.BackgroundColor = XLColor.Orange;
+            var lightPink = _sheet.Cell(_rowIndex, 2);
+            lightPink.Style.Fill.BackgroundColor = XLColor.LightPink;
 
             var hasRetunedText = _sheet.Cell(_rowIndex, 3);
             hasRetunedText.Value = "Has Returned Item";

@@ -98,11 +98,12 @@ namespace FBFInventory.Infrastructure.Service
                 qty = qty + h.AppopriateQty;
 
                 if (string.IsNullOrEmpty(h.Note)){
-                    if (h.DR != null)
-                        dI.NotesForIn = dI.NotesForIn + h.DR.Note + Environment.NewLine;
+                    if (h.DR != null){
+                        dI.NotesForIn.Add(h.DR.Note);
+                    }
                 }
                 else{
-                    dI.NotesForIn = dI.NotesForIn + h.Note + Environment.NewLine;
+                    dI.NotesForIn.Add(h.Note);
                 }
             }
 
@@ -121,11 +122,12 @@ namespace FBFInventory.Infrastructure.Service
             foreach (var h in hs){
                 qty = qty + h.AppopriateQty;
                 if (string.IsNullOrEmpty(h.Note)){
-                    if (h.DR != null)
-                        dI.NotesForOut = dI.NotesForOut + h.DR.Note + Environment.NewLine;
+                    if (h.DR != null){
+                        dI.NotesForOut.Add(h.DR.Note);
+                    }
                 }
                 else{
-                    dI.NotesForOut = dI.NotesForOut + h.Note + Environment.NewLine;
+                    dI.NotesForOut.Add(h.Note);
                 }
             }
 

@@ -286,6 +286,13 @@ namespace FBFInventory.Winforms
             dr.Note = txtNote.Text;
 
             _drService.Add(dr);
+            if (_drService.HasError){
+                MessageBox.Show(_drService.ErrorMessage,
+                        "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+
             _currentDr = _drService.NewlyCreatedDR;
             cmdPrint.Enabled = true;
 

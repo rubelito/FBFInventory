@@ -80,7 +80,7 @@ namespace FBFInventory.Winforms.Report
             stocks.Value = item.GetAppropriateQuantity;
 
             if (item.IsNearOutOfStock)
-                stocks.Style.Fill.BackgroundColor = XLColor.Rose;
+                stocks.Style.Fill.BackgroundColor = XLColor.LightPink;
 
             var threshold = _sheet.Cell(_rowIndex, 5);
             threshold.Value = item.Threshold;
@@ -89,8 +89,8 @@ namespace FBFInventory.Winforms.Report
         private void DisplayColorLedger(){
             _rowIndex = _rowIndex + 3;
 
-            var rose = _sheet.Cell(_rowIndex, 2);
-            rose.Style.Fill.BackgroundColor = XLColor.Rose;
+            var lightPink = _sheet.Cell(_rowIndex, 2);
+            lightPink.Style.Fill.BackgroundColor = XLColor.LightPink;
 
             var belowThresholdText = _sheet.Cell(_rowIndex, 3);
             belowThresholdText.Value = "Below Threshold";
@@ -103,5 +103,7 @@ namespace FBFInventory.Winforms.Report
             _sheet.Column(4).AdjustToContents();
             _sheet.Column(5).AdjustToContents();
         }
+
+
     }
 }

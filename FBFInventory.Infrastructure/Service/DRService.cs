@@ -14,6 +14,9 @@ namespace FBFInventory.Infrastructure.Service
         private readonly FBFDBContext _context;
         private static ILog Log = LogManager.GetLogger(typeof (DRService));
 
+        public string ErrorMessage = string.Empty;
+        public bool HasError;
+
         public DRService(FBFDBContext context){
             _context = context;
         }
@@ -21,9 +24,29 @@ namespace FBFInventory.Infrastructure.Service
         private DR _newlyCreatedDr;
 
         public void Add(DR dToAdd){
+            if (IsDrNumberExist(dToAdd)){
+                HasError = true;
+                ErrorMessage = "(S)DR number already exist!";
+                return;
+            }
+            else{
+                HasError = false;
+            }
+            
             _context.DRs.Add(dToAdd);
             SaveChanges("Add");
             _newlyCreatedDr = dToAdd;
+        }
+
+        private bool IsDrNumberExist(DR dr){
+            bool isExist = false;
+
+            if (dr.Type == ReceiptType.SDR)
+                isExist = _context.DRs.Any(d => d.SDRNumber.ToLower() == dr.SDRNumber.ToLower());
+            else if (dr.Type == ReceiptType.DR)
+                isExist = _context.DRs.Any(d => d.DRNumber.ToLower() == dr.DRNumber.ToLower());
+
+            return isExist;
         }
 
         public void Edit(DR dToEdit){
