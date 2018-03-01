@@ -65,6 +65,7 @@
             this.cmdEditReturn = new System.Windows.Forms.Button();
             this.cmdCreateReturn = new System.Windows.Forms.Button();
             this.itemPage = new System.Windows.Forms.TabPage();
+            this.cmdPrintItem = new System.Windows.Forms.Button();
             this.cmdViewHistory = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.rbInactive = new System.Windows.Forms.RadioButton();
@@ -82,10 +83,12 @@
             this.listViewItem = new System.Windows.Forms.ListView();
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.maintenancePage = new System.Windows.Forms.TabPage();
+            this.cmdChangePassword = new System.Windows.Forms.Button();
+            this.cmdUser = new System.Windows.Forms.Button();
             this.cmdItem = new System.Windows.Forms.Button();
             this.cmdShowCategory = new System.Windows.Forms.Button();
             this.cmdShowCustomer = new System.Windows.Forms.Button();
@@ -106,7 +109,8 @@
             this.lblNavigation = new System.Windows.Forms.Label();
             this.cmdNext = new System.Windows.Forms.Button();
             this.cmdLast = new System.Windows.Forms.Button();
-            this.cmdPrintItem = new System.Windows.Forms.Button();
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl.SuspendLayout();
             this.drPage.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -259,7 +263,8 @@
             this.columnHeader3,
             this.columnHeader4,
             this.columnHeader5,
-            this.columnHeader18});
+            this.columnHeader18,
+            this.columnHeader11});
             this.listViewDr.FullRowSelect = true;
             this.listViewDr.GridLines = true;
             this.listViewDr.Location = new System.Drawing.Point(7, 94);
@@ -283,7 +288,7 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Supplier/Customer";
-            this.columnHeader3.Width = 229;
+            this.columnHeader3.Width = 196;
             // 
             // columnHeader4
             // 
@@ -293,12 +298,12 @@
             // columnHeader5
             // 
             this.columnHeader5.Text = "Date";
-            this.columnHeader5.Width = 174;
+            this.columnHeader5.Width = 161;
             // 
             // columnHeader18
             // 
             this.columnHeader18.Text = "Return History";
-            this.columnHeader18.Width = 88;
+            this.columnHeader18.Width = 80;
             // 
             // tabPage1
             // 
@@ -383,7 +388,8 @@
             this.columnHeader14,
             this.columnHeader15,
             this.columnHeader16,
-            this.columnHeader17});
+            this.columnHeader17,
+            this.columnHeader19});
             this.listViewReturn.FullRowSelect = true;
             this.listViewReturn.GridLines = true;
             this.listViewReturn.Location = new System.Drawing.Point(6, 90);
@@ -407,12 +413,12 @@
             // columnHeader14
             // 
             this.columnHeader14.Text = "Customer";
-            this.columnHeader14.Width = 178;
+            this.columnHeader14.Width = 140;
             // 
             // columnHeader15
             // 
             this.columnHeader15.Text = "Project";
-            this.columnHeader15.Width = 154;
+            this.columnHeader15.Width = 108;
             // 
             // columnHeader16
             // 
@@ -422,7 +428,7 @@
             // columnHeader17
             // 
             this.columnHeader17.Text = "Date";
-            this.columnHeader17.Width = 111;
+            this.columnHeader17.Width = 124;
             // 
             // cmdEditReturn
             // 
@@ -446,6 +452,7 @@
             // 
             // itemPage
             // 
+            this.itemPage.Controls.Add(this.cmdPrintItem);
             this.itemPage.Controls.Add(this.cmdViewHistory);
             this.itemPage.Controls.Add(this.groupBox3);
             this.itemPage.Controls.Add(this.cmdOut);
@@ -463,6 +470,16 @@
             this.itemPage.TabIndex = 2;
             this.itemPage.Text = "Items";
             this.itemPage.UseVisualStyleBackColor = true;
+            // 
+            // cmdPrintItem
+            // 
+            this.cmdPrintItem.Location = new System.Drawing.Point(301, 13);
+            this.cmdPrintItem.Name = "cmdPrintItem";
+            this.cmdPrintItem.Size = new System.Drawing.Size(75, 23);
+            this.cmdPrintItem.TabIndex = 29;
+            this.cmdPrintItem.Text = "Print";
+            this.cmdPrintItem.UseVisualStyleBackColor = true;
+            this.cmdPrintItem.Click += new System.EventHandler(this.cmdPrintItem_Click);
             // 
             // cmdViewHistory
             // 
@@ -633,14 +650,14 @@
             this.columnHeader7.Text = "Item Desc";
             this.columnHeader7.Width = 188;
             // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "Stock";
-            // 
             // columnHeader9
             // 
             this.columnHeader9.Text = "Measured By";
             this.columnHeader9.Width = 83;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Stock";
             // 
             // columnHeader10
             // 
@@ -649,6 +666,8 @@
             // 
             // maintenancePage
             // 
+            this.maintenancePage.Controls.Add(this.cmdChangePassword);
+            this.maintenancePage.Controls.Add(this.cmdUser);
             this.maintenancePage.Controls.Add(this.cmdItem);
             this.maintenancePage.Controls.Add(this.cmdShowCategory);
             this.maintenancePage.Controls.Add(this.cmdShowCustomer);
@@ -660,6 +679,26 @@
             this.maintenancePage.TabIndex = 3;
             this.maintenancePage.Text = "Maintenance";
             this.maintenancePage.UseVisualStyleBackColor = true;
+            // 
+            // cmdChangePassword
+            // 
+            this.cmdChangePassword.Location = new System.Drawing.Point(21, 274);
+            this.cmdChangePassword.Name = "cmdChangePassword";
+            this.cmdChangePassword.Size = new System.Drawing.Size(75, 36);
+            this.cmdChangePassword.TabIndex = 5;
+            this.cmdChangePassword.Text = "Change Password";
+            this.cmdChangePassword.UseVisualStyleBackColor = true;
+            this.cmdChangePassword.Click += new System.EventHandler(this.cmdChangePassword_Click);
+            // 
+            // cmdUser
+            // 
+            this.cmdUser.Location = new System.Drawing.Point(21, 344);
+            this.cmdUser.Name = "cmdUser";
+            this.cmdUser.Size = new System.Drawing.Size(75, 23);
+            this.cmdUser.TabIndex = 4;
+            this.cmdUser.Text = "User";
+            this.cmdUser.UseVisualStyleBackColor = true;
+            this.cmdUser.Click += new System.EventHandler(this.cmdUser_Click);
             // 
             // cmdItem
             // 
@@ -856,22 +895,21 @@
             this.cmdLast.UseVisualStyleBackColor = true;
             this.cmdLast.Click += new System.EventHandler(this.cmdLast_Click);
             // 
-            // cmdPrintItem
+            // columnHeader11
             // 
-            this.cmdPrintItem.Location = new System.Drawing.Point(262, 511);
-            this.cmdPrintItem.Name = "cmdPrintItem";
-            this.cmdPrintItem.Size = new System.Drawing.Size(75, 23);
-            this.cmdPrintItem.TabIndex = 29;
-            this.cmdPrintItem.Text = "Print";
-            this.cmdPrintItem.UseVisualStyleBackColor = true;
-            this.cmdPrintItem.Click += new System.EventHandler(this.cmdPrintItem_Click);
+            this.columnHeader11.Text = "Created By";
+            this.columnHeader11.Width = 79;
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.Text = "Created By";
+            this.columnHeader19.Width = 85;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(772, 546);
-            this.Controls.Add(this.cmdPrintItem);
             this.Controls.Add(this.cmdFirst);
             this.Controls.Add(this.cmdPrevious);
             this.Controls.Add(this.lblNavigation);
@@ -988,5 +1026,9 @@
         private System.Windows.Forms.DateTimePicker dtpDaily;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button cmdPrintItem;
+        private System.Windows.Forms.Button cmdUser;
+        private System.Windows.Forms.Button cmdChangePassword;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader19;
     }
 }

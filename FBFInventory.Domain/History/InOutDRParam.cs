@@ -8,5 +8,6 @@ namespace FBFInventory.Domain.History
 
         public string Note { get; set; }
         public InOrOut InOrOut { get; set; }
+        public string Name { get; set; }
     }
 }

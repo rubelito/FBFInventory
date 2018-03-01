@@ -2,6 +2,7 @@
 using System.Data.Entity.Validation;
 using System.Linq;
 using FBFInventory.Domain.Entity;
+using FBFInventory.Infrastructure.Service;
 
 namespace FBFInventory.Infrastructure.EntityFramework
 {
@@ -10,7 +11,7 @@ namespace FBFInventory.Infrastructure.EntityFramework
         public FBFDBContext(IDatabaseType databaseType) :
             base(databaseType.Connectionstring(), true){
         }
-
+        
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
@@ -20,6 +21,8 @@ namespace FBFInventory.Infrastructure.EntityFramework
         public DbSet<ReturnedHistory> ReturnedHistories { get; set; }
         public DbSet<ReturnedItem> GoodItems { get; set; }
         public DbSet<ScrapItem> ScrapItems { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
         public DbSet<ItemHistory> ItemHistories { get; set; }
 
@@ -44,7 +47,8 @@ namespace FBFInventory.Infrastructure.EntityFramework
             }
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder){
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<DR>()
                 .HasOptional(e => e.ReturnedHistory)
                 .WithRequired(a => a.DR);

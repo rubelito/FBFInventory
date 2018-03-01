@@ -103,7 +103,7 @@ namespace FBFInventory.Infrastructure.Service
                     }
                 }
                 else{
-                    dI.NotesForIn.Add(h.Note);
+                    dI.NotesForIn.Add(h.Note + ". By :" + h.CreatedBy);
                 }
             }
 
@@ -127,7 +127,7 @@ namespace FBFInventory.Infrastructure.Service
                     }
                 }
                 else{
-                    dI.NotesForOut.Add(h.Note);
+                    dI.NotesForOut.Add(h.Note + ". By :" + h.CreatedBy);
                 }
             }
 

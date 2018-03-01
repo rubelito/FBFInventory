@@ -14,6 +14,7 @@ namespace FBFInventory.Winforms
 {
     public partial class MainForm : Form
     {
+
         private FBFDBContext _context;
 
         private int _pageSize = 19;
@@ -35,16 +36,86 @@ namespace FBFInventory.Winforms
         private string _navigationTextForItem;
         private string _navigationTextForReturnHistories;
 
+        private bool _isLoggedIn = false;
+        private string _name;
+        private string _role;
+
+        public bool HasError { get; set; }
+        public Exception Exception { get; set; }
+
+        private string _databaseIPAddress;
+
         public MainForm(){
             InitializeComponent();
 
-            IDatabaseType type = new EfSqlServer("SQLServerDb");
-            _context = new FBFDBContext(type);
+            //IDatabaseType type = new EfSqlServer("SQLServerDb");
+            //_context = new FBFDBContext(type);           
         }
 
         private void MainForm_Load(object sender, EventArgs e){
-            PopulateComboBox();
-            SearchDR();
+            tabControl.Enabled = false;
+            try{
+                TryLogUser();
+                if (_isLoggedIn)
+                {
+                    PopulateComboBox();
+                    InitializeDbContext(_databaseIPAddress);
+                    SearchDR();
+                }
+                else
+                {
+                    Close();
+                }
+            }
+            catch (Exception ex){
+                HasError = true;
+                this.Exception = ex;
+                this.Close();
+            }
+        }
+
+        private void TryLogUser(){
+            Login loginForm = new Login(_context);
+
+            loginForm.ShowDialog();
+            if (loginForm.IsLoggedIn){
+                _name = loginForm.UserName;
+                _role = loginForm.Role;
+                _isLoggedIn = true;
+
+                tabControl.Enabled = true;
+                _databaseIPAddress = loginForm.IpAddress;
+
+                if (_role == "Administrator")
+                    EnablePrivilageForAdmin();
+                else if (_role == "Member")
+                    EnablePrivilageForMember();
+                else if (_role == "Spectator")
+                    EnablePrivilageForSpectator();
+            }
+        }
+
+        private void EnablePrivilageForAdmin(){
+            //All this can do by Admin;
+        }
+
+        private void EnablePrivilageForMember(){
+            cmdUser.Enabled = false;
+        }
+
+        private void EnablePrivilageForSpectator(){
+            cmdNewSDR.Enabled = false;
+            cmdNewDR.Enabled = false;
+            cmdEditDR.Enabled = false;
+            cmdCreateReturn.Enabled = false;
+            cmdEditReturn.Enabled = false;
+            cmdIn.Enabled = false;
+            cmdOut.Enabled = false;
+            cmdShowSupplier.Enabled = false;
+            cmdShowCustomer.Enabled = false;
+            cmdShowCategory.Enabled = false;
+            cmdItem.Enabled = false;
+            cmdUser.Enabled = false;
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e){
@@ -57,6 +128,11 @@ namespace FBFInventory.Winforms
 
             cboItemCriteria.DataSource = Enum.GetValues(typeof (ItemSearchCriteria));
             cboItemCriteria.SelectedIndex = 0;
+        }
+
+        private void InitializeDbContext(string ipAddress){
+            IDatabaseType type = new EfSqlServer("SQLServerDb", ipAddress);
+            _context = new FBFDBContext(type);
         }
 
         private void SearchDR(){
@@ -81,7 +157,7 @@ namespace FBFInventory.Winforms
         private void LoadDRToListView(){
             listViewDr.Items.Clear();
             foreach (var i in _Drs){
-                string[] arr = new string[6];
+                string[] arr = new string[7];
                 arr[0] = Convert.ToString(i.Id);
                 if (i.Type == ReceiptType.SDR){
                     arr[1] = Convert.ToString(i.SDRNumber);
@@ -95,6 +171,8 @@ namespace FBFInventory.Winforms
                 arr[4] = i.Date.ToString();
                 if (i.HasReturnedHistory)
                     arr[5] = "Yes";
+
+                arr[6] = i.CreatedBy;
 
                 ListViewItem lit = new ListViewItem(arr);
                 listViewDr.Items.Add(lit);
@@ -132,13 +210,14 @@ namespace FBFInventory.Winforms
         private void LoadToReturnHistoryListView(){
             listViewReturn.Items.Clear();
             foreach (var i in _returnedHistories){
-                string[] arr = new string[6];
+                string[] arr = new string[7];
                 arr[0] = Convert.ToString(i.Id);
                 arr[1] = i.DR.DRNumber;
                 arr[2] = i.DR.Customer.Name;
                 arr[3] = i.DR.Project;
                 arr[4] = i.ProjectEngineer;
                 arr[5] = i.Date.ToString();
+                arr[6] = i.CreatedBy;
 
                 ListViewItem lit = new ListViewItem(arr);
                 listViewReturn.Items.Add(lit);
@@ -299,7 +378,7 @@ namespace FBFInventory.Winforms
             p.SelectedDR = selectedSDR;
 
             InWithDRForm f = new InWithDRForm(itemService, supplierService, customerService,
-                drService, inOutService, p);
+                drService, inOutService, p, _name);
 
             f.ShowDialog();
         }
@@ -363,7 +442,7 @@ namespace FBFInventory.Winforms
                 arr[0] = Convert.ToString(i.Id);
                 arr[1] = Convert.ToString(i.Name);
                 arr[2] = Convert.ToString(i.MeasuredBy);
-                arr[3] = Convert.ToString(i.GetAppropriateQuantity);                
+                arr[3] = Convert.ToString(i.GetAppropriateQuantity);
                 arr[4] = Convert.ToString(i.Threshold);
 
                 ListViewItem lit = new ListViewItem(arr);
@@ -397,7 +476,7 @@ namespace FBFInventory.Winforms
                 Item selectedItem = _items.FirstOrDefault(i => i.Id == itemId);
 
                 InOutWithOutDRForm f = new InOutWithOutDRForm(itemService, inOutService,
-                    inOrOut, selectedItem);
+                    inOrOut, selectedItem, _name);
 
                 f.ShowDialog();
                 if (f.HaveChangedQuantity)
@@ -465,7 +544,7 @@ namespace FBFInventory.Winforms
 
             ReturnedHistory h = returnedHistoryService.GetHistory(returnId);
             ReturnedItemForm f = new ReturnedItemForm(h, returnedHistoryService,
-                inOutService, drService);
+                inOutService, drService, _name);
             f.ShowDialog();
         }
 
@@ -479,7 +558,7 @@ namespace FBFInventory.Winforms
                 drService, returnedHistoryService);
 
             ReturnedItemForm f = new ReturnedItemForm(null, returnedHistoryService
-                , inOutService, drService);
+                , inOutService, drService, _name);
             f.ShowDialog();
         }
 
@@ -588,6 +667,25 @@ namespace FBFInventory.Winforms
             r.FileName = saveFileDialog.FileName;
 
             return r;
+        }
+
+        private void cmdChangePassword_Click(object sender, EventArgs e){
+            UserService userService = new UserService(_context);
+            ChangePasswordForm form = new ChangePasswordForm(userService, _name);
+            form.ShowDialog();
+
+            if (form.HasChangePassword)
+            {
+                this.Close();
+            }
+        }
+
+        private void cmdUser_Click(object sender, EventArgs e)
+        {
+            UserService userService = new UserService(_context);
+            UserListForm form = new UserListForm(userService, _name);
+
+            form.ShowDialog();
         }
     }
 }

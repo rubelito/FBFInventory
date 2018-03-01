@@ -50,7 +50,7 @@
             this.cmdInOut.Location = new System.Drawing.Point(199, 79);
             this.cmdInOut.Name = "cmdInOut";
             this.cmdInOut.Size = new System.Drawing.Size(75, 23);
-            this.cmdInOut.TabIndex = 20;
+            this.cmdInOut.TabIndex = 3;
             this.cmdInOut.Text = "In";
             this.cmdInOut.UseVisualStyleBackColor = true;
             this.cmdInOut.Click += new System.EventHandler(this.cmdInOut_Click);
@@ -69,7 +69,7 @@
             this.txtQty.Location = new System.Drawing.Point(64, 82);
             this.txtQty.Name = "txtQty";
             this.txtQty.Size = new System.Drawing.Size(52, 20);
-            this.txtQty.TabIndex = 18;
+            this.txtQty.TabIndex = 1;
             // 
             // label6
             // 
@@ -167,14 +167,14 @@
             this.txtNote.Multiline = true;
             this.txtNote.Name = "txtNote";
             this.txtNote.Size = new System.Drawing.Size(192, 106);
-            this.txtNote.TabIndex = 0;
+            this.txtNote.TabIndex = 2;
             // 
             // cmdClose
             // 
             this.cmdClose.Location = new System.Drawing.Point(430, 204);
             this.cmdClose.Name = "cmdClose";
             this.cmdClose.Size = new System.Drawing.Size(75, 23);
-            this.cmdClose.TabIndex = 22;
+            this.cmdClose.TabIndex = 4;
             this.cmdClose.Text = "Close";
             this.cmdClose.UseVisualStyleBackColor = true;
             this.cmdClose.Click += new System.EventHandler(this.cmdClose_Click);

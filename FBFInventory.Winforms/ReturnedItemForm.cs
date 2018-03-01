@@ -7,6 +7,7 @@ using FBFInventory.Domain.History;
 using FBFInventory.Infrastructure.Dto;
 using FBFInventory.Infrastructure.Service;
 using FBFInventory.Winforms.Helper;
+using FBFInventory.Winforms.Report;
 
 namespace FBFInventory.Winforms
 {
@@ -30,19 +31,22 @@ namespace FBFInventory.Winforms
         private List<ScrapItem> _scrapItems;
 
         private Operation _op;
+        private string _name;
 
         public ReturnedItemForm(ReturnedHistory history, ReturnedHistoryService returnedHistoryService,
-            InOutService inOutService, DRService drService){
+            InOutService inOutService, DRService drService, string name){
             _history = history;
             _returnedHistoryService = returnedHistoryService;
             _inOutService = inOutService;
             _drService = drService;
+            _name = name;
             InitializeComponent();
             _goodItems = new List<ReturnedItem>();
             _scrapItems = new List<ScrapItem>();
         }
 
         private void ReturnedItemForm_Load(object sender, EventArgs e){
+            cmdPrint.Enabled = false;
             DetermineIfEdit();
         }
 
@@ -90,6 +94,8 @@ namespace FBFInventory.Winforms
             lblAddress.Text = _history.DR.DeliveryAddress;
             dateTimePicker1.Value = _history.Date;
             txtNote.Text = _history.Note;
+            lblCreatedBy.Text = _history.CreatedBy;
+            cmdPrint.Enabled = true;
         }
 
         private void cmdCreate_Click(object sender, EventArgs e){
@@ -120,6 +126,7 @@ namespace FBFInventory.Winforms
             h.ProjectEngineer = txtProjectEngineer.Text;
             h.Date = dateTimePicker1.Value;
             h.Note = txtNote.Text;
+            h.CreatedBy = _name;
 
             _returnedHistoryService.Add(h);
             _history = _returnedHistoryService.NewlyCreatedHistory;
@@ -132,6 +139,8 @@ namespace FBFInventory.Winforms
             MessageBox.Show("Record Created!");
             _dr = _history.DR;
             GetItemsWithinDr();
+            lblCreatedBy.Text = _history.CreatedBy;
+            cmdPrint.Enabled = true;
         }
 
         private void cmdSaveEdit_Click(object sender, EventArgs e){
@@ -275,25 +284,20 @@ namespace FBFInventory.Winforms
         }
 
         private void ReturnGoodItem(){
-            if (_selectedItemForReturn != null)
-            {
-                if (IsItemAlreadyIncluded(goodListView, _selectedItemForReturn.Id))
-                {
+            if (_selectedItemForReturn != null){
+                if (IsItemAlreadyIncluded(goodListView, _selectedItemForReturn.Id)){
                     MessageBox.Show("Item already in the good list!",
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else if (txtGoodQty.Text == "0" || string.IsNullOrWhiteSpace(txtGoodQty.Text))
-                {
+                else if (txtGoodQty.Text == "0" || string.IsNullOrWhiteSpace(txtGoodQty.Text)){
                     MessageBox.Show("Please provide Quantity!",
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else if (IsInputIsGreaterThanCurrentQty(txtGoodQty, lblGoodQty))
-                {
+                else if (IsInputIsGreaterThanCurrentQty(txtGoodQty, lblGoodQty)){
                     MessageBox.Show("In should not be greated than DR stocks!",
                         "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                else
-                {
+                else{
                     ReturnedItem item = MakeGoodItem();
                     AddToStocksAndMakeHistory(item);
                     AddToListView(false, item, null);
@@ -301,8 +305,7 @@ namespace FBFInventory.Winforms
                     _selectedItemForReturn = null;
                 }
             }
-            else
-            {
+            else{
                 MessageBox.Show("Please select item!",
                     "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
@@ -326,6 +329,7 @@ namespace FBFInventory.Winforms
                      _dr.DRNumberToDisplay;
             p.DrId = _dr.Id;
             p.ItemId = rI.Item.Id;
+            p.Name = _name;
 
             _inOutService.InOutGoodItems(p);
         }
@@ -494,8 +498,7 @@ namespace FBFInventory.Winforms
             this.Close();
         }
 
-        private void txtGoodQty_KeyPress(object sender, KeyPressEventArgs e)
-        {
+        private void txtGoodQty_KeyPress(object sender, KeyPressEventArgs e){
             AllowNumberOnly(sender, e);
         }
 
@@ -512,6 +515,27 @@ namespace FBFInventory.Winforms
             if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1)){
                 e.Handled = true;
             }
-        }    
+        }
+
+        private void cmdPrint_Click(object sender, EventArgs e){
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel Documents (*.xlsx)|*.xlsx";
+            saveFileDialog.FileName = "Return History - " + _history.DRNumber;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK){
+                try{
+                    GenerateExcelReport(saveFileDialog.FileName);
+                    MessageBox.Show("Report Generated!");
+                }
+                catch (Exception ex){
+                    MessageBox.Show(ex.Message, "Error Exporting Report");
+                }
+            }
+        }
+
+        private void GenerateExcelReport(string path){
+            ReturnHistoryReporter reporter =
+                new ReturnHistoryReporter(_history, _goodItems, _scrapItems);
+            reporter.Export(path);
+        }
     }
 }

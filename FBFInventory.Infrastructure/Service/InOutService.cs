@@ -130,6 +130,7 @@ namespace FBFInventory.Infrastructure.Service
 
             p.InOutQty = param.Qty;
             p.Note = param.Note;
+            p.Name = param.Name;
 
             return p;
         }
@@ -145,6 +146,7 @@ namespace FBFInventory.Infrastructure.Service
             p.InOutQty = inParam.DRItem.Qty;
             p.Note = inParam.Note;
             p.DR = inParam.DRItem.DR;
+            p.Name = inParam.Name;
             
             if (inParam.DRItem.DR != null)
                 p.Type = inParam.DRItem.DR.Type;
@@ -164,8 +166,9 @@ namespace FBFInventory.Infrastructure.Service
             p.Note = param .Note;
             p.DR = param.ReturnedItem.ReturnedHistory.DR;
             p.IsMistaken = true;
+            p.Name = param.Name;
 
-                return p;
+            return p;
         }
     }
 }

@@ -67,6 +67,8 @@
             this.cmdSaveEdit = new System.Windows.Forms.Button();
             this.cmdCancel = new System.Windows.Forms.Button();
             this.cmdPrint = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblCreatedBy = new System.Windows.Forms.Label();
             this.grdSupplierCustomer.SuspendLayout();
             this.grdItems.SuspendLayout();
             this.SuspendLayout();
@@ -397,7 +399,7 @@
             // 
             // cmdClose
             // 
-            this.cmdClose.Location = new System.Drawing.Point(381, 564);
+            this.cmdClose.Location = new System.Drawing.Point(395, 564);
             this.cmdClose.Name = "cmdClose";
             this.cmdClose.Size = new System.Drawing.Size(75, 23);
             this.cmdClose.TabIndex = 3;
@@ -435,11 +437,30 @@
             this.cmdPrint.UseVisualStyleBackColor = true;
             this.cmdPrint.Click += new System.EventHandler(this.cmdPrint_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(27, 569);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(62, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Created By:";
+            // 
+            // lblCreatedBy
+            // 
+            this.lblCreatedBy.AutoSize = true;
+            this.lblCreatedBy.Location = new System.Drawing.Point(92, 569);
+            this.lblCreatedBy.Name = "lblCreatedBy";
+            this.lblCreatedBy.Size = new System.Drawing.Size(0, 13);
+            this.lblCreatedBy.TabIndex = 13;
+            // 
             // InWithDRForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 595);
+            this.ClientSize = new System.Drawing.Size(536, 595);
+            this.Controls.Add(this.lblCreatedBy);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.cmdPrint);
             this.Controls.Add(this.cmdCancel);
             this.Controls.Add(this.cmdClose);
@@ -458,6 +479,7 @@
             this.grdItems.ResumeLayout(false);
             this.grdItems.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -502,5 +524,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button cmdPrint;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lblCreatedBy;
     }
 }

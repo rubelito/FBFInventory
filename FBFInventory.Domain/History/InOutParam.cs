@@ -9,5 +9,6 @@ namespace FBFInventory.Domain.History
         public InOrOut InOrOut { get; set; }
         public double Qty { get; set; }
         public string Note { get; set; }
+        public string Name { get; set; }
     }
 }

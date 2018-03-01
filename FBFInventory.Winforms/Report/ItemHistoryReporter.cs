@@ -94,6 +94,11 @@ namespace FBFInventory.Winforms.Report
             noteColumn.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             noteColumn.Style.Font.Bold = true;
 
+            var createdByColumn = _sheet.Cell(_rowIndex, 10);
+            createdByColumn.Value = "In/Out By";
+            createdByColumn.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            createdByColumn.Style.Font.Bold = true;
+
             _rowIndex = _rowIndex + 1;
         }
 
@@ -138,6 +143,9 @@ namespace FBFInventory.Winforms.Report
 
             var note = _sheet.Cell(_rowIndex, 9);
             note.Value = h.Note;
+
+            var createdBy = _sheet.Cell(_rowIndex, 10);
+            createdBy.Value = h.CreatedBy;
         }
 
         private XLColor GetColor(ItemHistory h){
@@ -164,6 +172,7 @@ namespace FBFInventory.Winforms.Report
             _sheet.Column(7).AdjustToContents();
             _sheet.Column(8).AdjustToContents();
             _sheet.Column(9).AdjustToContents();
+            _sheet.Column(10).AdjustToContents();
         }
     }
 }

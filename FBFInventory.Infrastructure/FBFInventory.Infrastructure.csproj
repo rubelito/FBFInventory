@@ -74,6 +74,7 @@
     <Compile Include="Service\ItemService.cs" />
     <Compile Include="Service\ReturnedHistoryService.cs" />
     <Compile Include="Service\SupplierService.cs" />
+    <Compile Include="Service\UserService.cs" />
     <Compile Include="Service\WeeklyHistoryReportService.cs" />
   </ItemGroup>
   <ItemGroup>

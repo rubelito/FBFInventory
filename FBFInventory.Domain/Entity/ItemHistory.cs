@@ -25,6 +25,7 @@ namespace FBFInventory.Domain.Entity
 
         public DateTime DateAdded { get; set; }
         public bool IsMistaken { get; set; }
+        public string CreatedBy { get; set; }
 
         public string Note { get; set; }
 

@@ -42,6 +42,8 @@ namespace FBFInventory.Domain.Entity
        
         public string Note { get; set; }
 
+        public string CreatedBy { get; set; }
+
         public virtual ReturnedHistory ReturnedHistory { get; set; }
         public bool HasReturnedHistory { get { return ReturnedHistory != null; } }
 

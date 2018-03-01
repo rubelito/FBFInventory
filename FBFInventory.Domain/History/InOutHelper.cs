@@ -33,6 +33,7 @@ namespace FBFInventory.Domain.History
             h.Note = param.Note;
             h.DR = param.DR;
             h.IsMistaken = param.IsMistaken;
+            h.CreatedBy = param.Name;
             
             return h;
         }

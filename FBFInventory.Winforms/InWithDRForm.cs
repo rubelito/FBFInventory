@@ -18,6 +18,7 @@ namespace FBFInventory.Winforms
         private readonly DRService _drService;
         private readonly InOutService _inOutService;
         private readonly DRParam _param;
+        private readonly string _name;
         private List<Item> _items;
         private List<DRItem> _drItems;
 
@@ -31,13 +32,14 @@ namespace FBFInventory.Winforms
 
         public InWithDRForm(ItemService itemService, SupplierService supplierService,
             CustomerService customerService, DRService drService, InOutService inOutService,
-            DRParam param){
+            DRParam param, string name){
             _itemService = itemService;
             _supplierService = supplierService;
             _customerService = customerService;
             _drService = drService;
             _inOutService = inOutService;
             _param = param;
+            _name = name;
 
             _items = _itemService.AllActiveItems();
             _drItems = new List<DRItem>();
@@ -91,6 +93,7 @@ namespace FBFInventory.Winforms
             txtNote.Text = _param.SelectedDR.Note;
             _currentDr = _param.SelectedDR;
             cmdPrint.Enabled = true;
+            lblCreatedBy.Text = _currentDr.CreatedBy;
         }
 
         private void LoadItemsToGridView(){
@@ -284,6 +287,7 @@ namespace FBFInventory.Winforms
             dr.Type = _param.ReceiptType;
             dr.Date = dateTimePicker1.Value;
             dr.Note = txtNote.Text;
+            dr.CreatedBy = _name;
 
             _drService.Add(dr);
             if (_drService.HasError){
@@ -299,6 +303,7 @@ namespace FBFInventory.Winforms
             EnableDisableDrControls(false);
             cmdCreate.Enabled = false;
             EnableDisableItemControls(true);
+            lblCreatedBy.Text = _currentDr.CreatedBy;
         }
 
         private void EnableDisableDrControls(bool enabled){
@@ -375,7 +380,6 @@ namespace FBFInventory.Winforms
                             return;
                         }
                     }
-
                     DRItem item = MakeDRItem();
                     AddOrSubtractToStockAndMakeHistory(item);
                     AddToListView(item);
@@ -396,6 +400,7 @@ namespace FBFInventory.Winforms
         private void AddOrSubtractToStockAndMakeHistory(DRItem item){
             InOutDRParam p = new InOutDRParam();
             p.DRItem = item;
+            p.Name = _name;
             DetermineIfInOrOutAndMakeComment(p, false);
 
             _inOutService.InOutWithDR(p);

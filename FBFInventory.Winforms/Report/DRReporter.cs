@@ -62,6 +62,16 @@ namespace FBFInventory.Winforms.Report
             var sdrOrDr = _sheet.Cell(_rowIndex, 2);
             sdrOrDr.Value = _dr.DRNumberToDisplay;
             sdrOrDr.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+            _rowIndex++;
+            var createdByLabel = _sheet.Cell(_rowIndex, 1);
+            createdByLabel.Value = "Created By :";
+            createdByLabel.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Right;
+            createdByLabel.Style.Font.Bold = true;
+
+            var createdBy = _sheet.Cell(_rowIndex, 2);
+            createdBy.Value = _dr.CreatedBy;
+            createdBy.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
             
             if (_dr.Type == ReceiptType.DR){
                 _rowIndex++;

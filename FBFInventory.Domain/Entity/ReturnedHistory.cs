@@ -17,6 +17,7 @@ namespace FBFInventory.Domain.Entity
         public string ProjectEngineer { get; set; }
 
         public string Note { get; set; }
+        public string CreatedBy { get; set; }
 
         public virtual List<ReturnedItem> GoodItems { get; set; }
         public virtual List<ScrapItem> ScrapItems { get; set; } 

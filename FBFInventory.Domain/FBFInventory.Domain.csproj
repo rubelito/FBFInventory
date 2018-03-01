@@ -35,7 +35,9 @@
     <Compile Include="Entity\DRItem.cs" />
     <Compile Include="Entity\ReturnedHistory.cs" />
     <Compile Include="Entity\ReturnedItem.cs" />
+    <Compile Include="Entity\Role.cs" />
     <Compile Include="Entity\ScrapItem.cs" />
+    <Compile Include="Entity\User.cs" />
     <Compile Include="History\InOutHelper.cs" />
     <Compile Include="History\HistoryParam.cs" />
     <Compile Include="History\InOutDRParam.cs" />

@@ -15,7 +15,12 @@ namespace FBFInventory.DB
         private void button1_Click(object sender, EventArgs e)
         {
             DbCreator d = new DbCreator();
-            d.Create();
+            d.Create(txtIpAddress.Text);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -86,7 +86,7 @@ namespace FBFInventory.Winforms
         private void LoadHistoryToListView(){
             listView1.Items.Clear();
             foreach (var h in _histories){
-                string[] arr = new string[9];
+                string[] arr = new string[10];
                 arr[0] = Convert.ToString(h.Id);
                 arr[1] = Convert.ToString(h.Type);
                 arr[2] = Convert.ToString(h.InOrOut);
@@ -103,7 +103,7 @@ namespace FBFInventory.Winforms
                 arr[4] = Convert.ToString(h.AppopriateBeginningQty);
                 arr[5] = Convert.ToString(h.AppopriateQty);
                 arr[6] = Convert.ToString(h.AppopriateEndingQty);
-                arr[7] = h.DateAdded.ToString();
+                arr[7] = h.DateAdded.ToString();       
 
                 if (string.IsNullOrEmpty(h.Note)){
                     if (h.DR != null)
@@ -112,6 +112,8 @@ namespace FBFInventory.Winforms
                 else{
                     arr[8] = h.Note;
                 }
+
+                arr[9] = h.CreatedBy;
 
                 ListViewItem lit = new ListViewItem(arr);
 

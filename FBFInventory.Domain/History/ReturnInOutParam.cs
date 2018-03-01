@@ -10,5 +10,6 @@ namespace FBFInventory.Domain.History
 
         public long DrId { get; set; }
         public long ItemId { get; set; }
+        public string Name { get; set; }
     }
 }

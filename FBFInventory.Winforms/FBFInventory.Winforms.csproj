@@ -49,6 +49,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
@@ -119,6 +120,12 @@
     <Compile Include="ItemBrowserForm.Designer.cs">
       <DependentUpon>ItemBrowserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +152,7 @@
     <Compile Include="Report\ItemHistoryReporter.cs" />
     <Compile Include="Report\ItemReportDTO.cs" />
     <Compile Include="Report\ItemsReporter.cs" />
+    <Compile Include="Report\ReturnHistoryReporter.cs" />
     <Compile Include="Report\WeeklyReporter.cs" />
     <Compile Include="ReturnedItemForm.cs">
       <SubType>Form</SubType>
@@ -163,6 +171,24 @@
     </Compile>
     <Compile Include="SupplierCustomerMaintenanceForm.Designer.cs">
       <DependentUpon>SupplierCustomerMaintenanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeUserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeUserForm.Designer.cs">
+      <DependentUpon>ChangeUserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserDialogue.Designer.cs">
+      <DependentUpon>UserDialogue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserList.Designer.cs">
+      <DependentUpon>UserList.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CategoryDialog.resx">
       <DependentUpon>CategoryDialog.cs</DependentUpon>
@@ -184,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ItemBrowserForm.resx">
       <DependentUpon>ItemBrowserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -212,6 +241,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SupplierCustomerMaintenanceForm.resx">
       <DependentUpon>SupplierCustomerMaintenanceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeUserForm.resx">
+      <DependentUpon>ChangeUserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserDialogue.resx">
+      <DependentUpon>UserDialogue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserList.resx">
+      <DependentUpon>UserList.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

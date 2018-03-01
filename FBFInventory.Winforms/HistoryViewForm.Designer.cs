@@ -41,6 +41,7 @@
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmdFirst = new System.Windows.Forms.Button();
             this.cmdPrevious = new System.Windows.Forms.Button();
             this.lblNavigation = new System.Windows.Forms.Label();
@@ -82,7 +83,8 @@
             this.columnHeader6,
             this.columnHeader7,
             this.columnHeader8,
-            this.columnHeader9});
+            this.columnHeader9,
+            this.columnHeader10});
             this.listView1.FullRowSelect = true;
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(19, 63);
@@ -136,7 +138,12 @@
             // columnHeader9
             // 
             this.columnHeader9.Text = "Note";
-            this.columnHeader9.Width = 348;
+            this.columnHeader9.Width = 267;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "In/Out By";
+            this.columnHeader10.Width = 80;
             // 
             // cmdFirst
             // 
@@ -294,5 +301,6 @@
         private System.Windows.Forms.Button cmdPrint;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblMeasuredBy;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
     }
 }

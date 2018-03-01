@@ -15,13 +15,15 @@ namespace FBFInventory.Winforms
         private bool _haveChangedQuantity;
 
         private Item _item;
+        private readonly string _name;
 
         public InOutWithOutDRForm(ItemService itemService, InOutService inOutService,
-            InOrOut inOrOut, Item selectedItem){
+            InOrOut inOrOut, Item selectedItem, string name){
             _itemService = itemService;
             _inOutService = inOutService;
             _inOrOut = inOrOut;
             _item = selectedItem;
+            _name = name;
             InitializeComponent();
         }
 
@@ -86,6 +88,7 @@ namespace FBFInventory.Winforms
             InOutParam p = new InOutParam();
             p.Item = _item;           
             p.Qty = Convert.ToDouble(txtQty.Text);
+            p.Name = _name;
 
             if (_inOrOut == InOrOut.In){
                 p.InOrOut = InOrOut.In;

@@ -174,6 +174,12 @@ namespace FBFInventory.Winforms
         }
 
         private void cmdEdit_Click(object sender, EventArgs e){
+            if (_selectedItem == null){
+                MessageBox.Show("Please select Item from the list!",
+                    "", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
             _currentOperation = Operation.Edit;
             OnEditMode();
         }

@@ -78,6 +78,9 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmdClose = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.lblCreatedBy = new System.Windows.Forms.Label();
+            this.cmdPrint = new System.Windows.Forms.Button();
             this.grdControl.SuspendLayout();
             this.grdItem.SuspendLayout();
             this.SuspendLayout();
@@ -560,11 +563,41 @@
             this.cmdClose.UseVisualStyleBackColor = true;
             this.cmdClose.Click += new System.EventHandler(this.cmdClose_Click);
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(20, 540);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(65, 13);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "Created By :";
+            // 
+            // lblCreatedBy
+            // 
+            this.lblCreatedBy.AutoSize = true;
+            this.lblCreatedBy.Location = new System.Drawing.Point(87, 540);
+            this.lblCreatedBy.Name = "lblCreatedBy";
+            this.lblCreatedBy.Size = new System.Drawing.Size(0, 13);
+            this.lblCreatedBy.TabIndex = 17;
+            // 
+            // cmdPrint
+            // 
+            this.cmdPrint.Location = new System.Drawing.Point(526, 157);
+            this.cmdPrint.Name = "cmdPrint";
+            this.cmdPrint.Size = new System.Drawing.Size(75, 23);
+            this.cmdPrint.TabIndex = 18;
+            this.cmdPrint.Text = "Print";
+            this.cmdPrint.UseVisualStyleBackColor = true;
+            this.cmdPrint.Click += new System.EventHandler(this.cmdPrint_Click);
+            // 
             // ReturnedItemForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(643, 564);
+            this.Controls.Add(this.cmdPrint);
+            this.Controls.Add(this.lblCreatedBy);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.cmdClose);
             this.Controls.Add(this.grdItem);
             this.Controls.Add(this.cmdCancel);
@@ -582,6 +615,7 @@
             this.grdItem.ResumeLayout(false);
             this.grdItem.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -637,5 +671,8 @@
         private System.Windows.Forms.Button cmdGoodRemove;
         private System.Windows.Forms.Button cmdScrapRemove;
         private System.Windows.Forms.Button cmdClose;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lblCreatedBy;
+        private System.Windows.Forms.Button cmdPrint;
     }
 }
