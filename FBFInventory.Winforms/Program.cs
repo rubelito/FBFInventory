@@ -106,7 +106,7 @@ namespace FBFInventory.Winforms
         }
 
         private static string GetNetworkRelatedMessage(){
-            return
+            return 
                 "Cannot connect to Database server. Make sure the IP address is correct or the instance of SQL server is running";
         }
     }
