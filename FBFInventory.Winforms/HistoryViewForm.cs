@@ -42,7 +42,7 @@ namespace FBFInventory.Winforms
             ColumnHeader qtyColumn = listView1.Columns[5];
             ColumnHeader endingColumn = listView1.Columns[6];
 
-            if (_item.MeasuredBy == MeasuredBy.Quantity){
+            if (_item.MeasuredBy == MeasuredBy.pcs){
                 beginningColumn.Text = "Beginning Qty";
                 qtyColumn.Text = "Qty";
                 endingColumn.Text = "Ending Qty";

@@ -55,30 +55,38 @@ namespace FBFInventory.Infrastructure.Service
                 row.ItemName = item.Name;
 
                 foreach (var daySection in _range){
-                    DailyOut dOut = ComputeDailyOut(daySection, item.Id);
-                    row.DailyOuts.Add(dOut);
+                    DailyInOut dInOut = ComputeDailyInOut(daySection, item.Id);
+                    row.DailyInOuts.Add(dInOut);
                 }
 
                 _itemRows.Add(row);
             }
         }
 
-        private DailyOut ComputeDailyOut(DaySection section, long itemId){
-            DailyOut dOut = new DailyOut();
+        private DailyInOut ComputeDailyInOut(DaySection section, long itemId){
+            DailyInOut dInOut = new DailyInOut();
             TemporaryHistoryStorage temp =
                 _tempHistories.FirstOrDefault(t => t.DaySection.DateId == section.DateId);
 
             List<ItemHistory> historiesOfItem = temp.Histories.Where(h => h.Item_Id == itemId).ToList();
 
+            List<ItemHistory> inHistories = historiesOfItem.Where(h => h.InOrOut == InOrOut.In).ToList();
+            double inQty = 0;
+            foreach (var h in inHistories){
+                inQty = inQty + h.AppopriateQty;
+            }
+
+            List<ItemHistory> outHistories = historiesOfItem.Where(h => h.InOrOut == InOrOut.Out).ToList();
             double outQty = 0;
-            foreach (var h in historiesOfItem){
+            foreach (var h in outHistories){
                 outQty = outQty + h.AppopriateQty;
             }
 
-            dOut.DaySection = section;
-            dOut.OutQty = outQty;
+            dInOut.DaySection = section;
+            dInOut.InQty = inQty;
+            dInOut.OutQty = outQty;
 
-            return dOut;
+            return dInOut;
         }
 
         private void GenerateCoverangeRange(){
@@ -102,8 +110,7 @@ namespace FBFInventory.Infrastructure.Service
             p.SearchWithDate = true;
             p.From = day;
             p.To = day.AddDays(1);
-            p.ShouldFilterByInOrOut = true;
-            p.InOrOut = InOrOut.Out;
+            p.ShouldFilterByInOrOut = false;
 
             return p;
         }

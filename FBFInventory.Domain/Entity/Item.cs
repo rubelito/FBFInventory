@@ -43,7 +43,7 @@ namespace FBFInventory.Domain.Entity
             get{
                 double qty = 0;
 
-                if (MeasuredBy == MeasuredBy.Quantity)
+                if (MeasuredBy == MeasuredBy.pcs)
                     qty = Quantity;
                 else if (MeasuredBy == MeasuredBy.Meters)
                     qty = Meters;

@@ -194,9 +194,9 @@ namespace FBFInventory.Winforms
             lblItem.Text = _selectedItemToAdd.Name;
             lblCurrentQty.Text = Convert.ToString(_selectedItemToAdd.GetAppropriateQuantity);
 
-            if (_selectedItemToAdd.MeasuredBy == MeasuredBy.Quantity){
-                lblMeasuredBy.Text = "Qty.";
-                lblMeasuredBy1.Text = "Qty.";
+            if (_selectedItemToAdd.MeasuredBy == MeasuredBy.pcs){
+                lblMeasuredBy.Text = "pcs.";
+                lblMeasuredBy1.Text = "pcs.";
             }
             else if (_selectedItemToAdd.MeasuredBy == MeasuredBy.Meters){
                 lblMeasuredBy.Text = "m.";

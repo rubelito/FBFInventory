@@ -10,7 +10,7 @@ namespace FBFInventory.Domain.History
             h.Item = param.ItemToMonitor;
             h.MeasuredBy = h.Item.MeasuredBy;
 
-            if (h.MeasuredBy == MeasuredBy.Quantity){
+            if (h.MeasuredBy == MeasuredBy.pcs){
                 h.BeginningQuantity = param.OldQty;
                 h.Quantity = param.InOutQty;
                 h.EndingQuantity = param.NewQty;
@@ -39,7 +39,7 @@ namespace FBFInventory.Domain.History
         }
 
         public static void AddToAppopriateMeasurement(Item item, double qty){
-            if (item.MeasuredBy == MeasuredBy.Quantity){
+            if (item.MeasuredBy == MeasuredBy.pcs){
                 item.Quantity = item.Quantity + qty;
             }
             else if (item.MeasuredBy == MeasuredBy.Meters)
@@ -54,7 +54,7 @@ namespace FBFInventory.Domain.History
 
         public static void SubtractToAppopriateMeasurement(Item item, double qty)
         {
-            if (item.MeasuredBy == MeasuredBy.Quantity)
+            if (item.MeasuredBy == MeasuredBy.pcs)
             {
                 item.Quantity = item.Quantity - qty;
             }

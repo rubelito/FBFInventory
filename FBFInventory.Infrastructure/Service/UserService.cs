@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
 using FBFInventory.Domain.Entity;
@@ -48,7 +46,7 @@ namespace FBFInventory.Infrastructure.Service
         }
 
         public void ChangePassword(long userId, string newPassword){
-            User oldUser = _context.Users.FirstOrDefault(u => u.Id == userId);
+            User oldUser = _context.Users.Include("Role").FirstOrDefault(u => u.Id == userId);
             oldUser.Password = newPassword;
 
             SaveChanges("ChangePassword");

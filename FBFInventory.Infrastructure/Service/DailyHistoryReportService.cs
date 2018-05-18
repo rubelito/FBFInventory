@@ -54,6 +54,7 @@ namespace FBFInventory.Infrastructure.Service
             DailyItem d = new DailyItem();
             d.Id = i.Id;
             d.ItemName = i.Name;
+            d.MeasuredBy = i.MeasuredBy;
             d.BeginningQty = GetBeginningQty(i);
             GetInQtyAndSetNotes(i, d);
             GetOutQtyAndSetNotes(i, d);

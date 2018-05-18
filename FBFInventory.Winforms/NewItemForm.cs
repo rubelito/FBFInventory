@@ -88,7 +88,7 @@ namespace FBFInventory.Winforms
         }
 
         private void SetThresholdLabelValue(){
-            if (_measuredBy == MeasuredBy.Quantity){
+            if (_measuredBy == MeasuredBy.pcs){
                 lblMeasuredBy.Text = "Qty";
             }
             else if (_measuredBy == MeasuredBy.Meters){
@@ -123,7 +123,7 @@ namespace FBFInventory.Winforms
                 arr[1] = Convert.ToString(i.Name);
                 arr[2] = Convert.ToString(i.MeasuredBy);
 
-                if (i.MeasuredBy == MeasuredBy.Quantity)
+                if (i.MeasuredBy == MeasuredBy.pcs)
                     arr[3] = Convert.ToString(i.Quantity);
                 else if (i.MeasuredBy == MeasuredBy.Meters)
                     arr[3] = Convert.ToString(i.Meters);
@@ -171,6 +171,8 @@ namespace FBFInventory.Winforms
         private void cmdAdd_Click(object sender, EventArgs e){
             _currentOperation = Operation.Add;
             OnAddMode();
+
+            cboMeasuredBy.Enabled = true;
         }
 
         private void cmdEdit_Click(object sender, EventArgs e){
@@ -234,6 +236,7 @@ namespace FBFInventory.Winforms
             OnNormalMode();
             SearchItem();
             ClearFields();
+            cboMeasuredBy.Enabled = false;
         }
 
         private void OnEditMode(){
@@ -262,6 +265,8 @@ namespace FBFInventory.Winforms
         private void OnNormalMode(){
             _currentOperation = Operation.Nothing;
             DisableControl();
+
+            cboMeasuredBy.Enabled = false;
 
             cmdSave.Enabled = false;
             cmdSave.Visible = false;
@@ -292,7 +297,7 @@ namespace FBFInventory.Winforms
             txtItemDesc.Text = string.Empty;
             txtThreshold.Text = string.Empty;
             txtCost.Text = string.Empty;
-            _measuredBy = MeasuredBy.Quantity;
+            _measuredBy = MeasuredBy.pcs;
             cboMeasuredBy.SelectedIndex = 0;
             cboCategory.SelectedIndex = 0;
             _selectedSupplier = null;

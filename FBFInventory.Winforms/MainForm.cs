@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using FBFInventory.Domain.Entity;
 using FBFInventory.Infrastructure.Dto;
 using FBFInventory.Infrastructure.EntityFramework;
+using FBFInventory.Infrastructure.ReportPoco;
 using FBFInventory.Infrastructure.Service;
 using FBFInventory.Winforms.Helper;
 using FBFInventory.Winforms.Report;
@@ -615,7 +616,11 @@ namespace FBFInventory.Winforms
             WeeklyHistoryReportService s = new WeeklyHistoryReportService(itemService, historyService);
             DateTime from = dtpWeeklyFrom.Value.Date;
             DateTime to = dtpWeeklyTo.Value.Date;
-            var record = s.GetWeeklyReport(from, to);
+
+            SupplierInReportService d = new SupplierInReportService(new DRService(_context));
+            
+            WeeklyReportDTO record = s.GetWeeklyReport(from, to);
+            record.SupplierReport = d.blah(from, to);
 
             WeeklyReporter reporter =
                 new WeeklyReporter(record, fileName);

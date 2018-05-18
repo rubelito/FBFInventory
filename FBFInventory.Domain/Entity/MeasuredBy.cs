@@ -1,9 +1,8 @@
-﻿using System;
-namespace FBFInventory.Domain.Entity
+﻿namespace FBFInventory.Domain.Entity
 {
     public enum MeasuredBy
     {
-        Quantity,
+        pcs,
         Meters,
         Feet
     }

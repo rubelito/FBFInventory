@@ -40,7 +40,7 @@ namespace FBFInventory.Domain.Entity
         public double AppopriateBeginningQty{
             get{
                 double qty = 0;
-                if (MeasuredBy == MeasuredBy.Quantity)
+                if (MeasuredBy == MeasuredBy.pcs)
                     qty = BeginningQuantity;
                 if (MeasuredBy == MeasuredBy.Meters)
                     qty = BeginningMeters;
@@ -54,7 +54,7 @@ namespace FBFInventory.Domain.Entity
         public double AppopriateQty{
             get{
                 double qty = 0;
-                if (MeasuredBy == MeasuredBy.Quantity)
+                if (MeasuredBy == MeasuredBy.pcs)
                     qty = Quantity;
                 if (MeasuredBy == MeasuredBy.Meters)
                     qty = Meters;
@@ -68,7 +68,7 @@ namespace FBFInventory.Domain.Entity
         public double AppopriateEndingQty{
             get{
                 double qty = 0;
-                if (MeasuredBy == MeasuredBy.Quantity)
+                if (MeasuredBy == MeasuredBy.pcs)
                     qty = EndingQuantity;
                 if (MeasuredBy == MeasuredBy.Meters)
                     qty = EndingMeters;

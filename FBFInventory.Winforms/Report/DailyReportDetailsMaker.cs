@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
 using FBFInventory.Domain.Entity;
 using FBFInventory.Infrastructure.ReportPoco;
 
@@ -66,28 +67,37 @@ namespace FBFInventory.Winforms.Report
 
         private void DisplayItems(InOrOut inOut){
             IXLWorksheet tempSheet = inOut == InOrOut.In ? _inSheet : _outSheet;
-
+            
             foreach (var item in _dto.Records){
-                IncrementRowIndex(inOut, 2);
+                double qty = inOut == InOrOut.In ? item.In : item.Out;
 
-                var id = tempSheet.Cell(GetAppopriateRowIndex(inOut), 1);
-                id.Value = item.Id;
+                if (HasInOutHistory(qty)){
 
-                var itemDesc = tempSheet.Cell(GetAppopriateRowIndex(inOut), 2);
-                itemDesc.Value = item.ItemName;
+                    IncrementRowIndex(inOut, 2);
 
-                var total = tempSheet.Cell(GetAppopriateRowIndex(inOut), 3);
-                total.Value = inOut == InOrOut.In ? item.In : item.Out;
+                    var id = tempSheet.Cell(GetAppopriateRowIndex(inOut), 1);
+                    id.Value = item.Id;
 
-                List<string> notes = inOut == InOrOut.In ? item.NotesForIn : item.NotesForOut;
+                    var itemDesc = tempSheet.Cell(GetAppopriateRowIndex(inOut), 2);
+                    itemDesc.Value = item.ItemName;
 
-                foreach (var n in notes){
-                    IncrementRowIndex(inOut, 1);
+                    var total = tempSheet.Cell(GetAppopriateRowIndex(inOut), 3);
+                    total.Value = qty;
 
-                    var comment = tempSheet.Cell(GetAppopriateRowIndex(inOut), 4);
-                    comment.Value = n;
+                    List<string> notes = inOut == InOrOut.In ? item.NotesForIn : item.NotesForOut;
+
+                    foreach (var n in notes){
+                        IncrementRowIndex(inOut, 1);
+
+                        var comment = tempSheet.Cell(GetAppopriateRowIndex(inOut), 4);
+                        comment.Value = n;
+                    }
                 }
             }
+        }
+
+        private bool HasInOutHistory(double qty){
+            return qty != 0;
         }
 
         private void IncrementRowIndex(InOrOut inOut, int incrementBy){

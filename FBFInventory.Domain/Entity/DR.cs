@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FBFInventory.Domain.Entity
 {
@@ -14,7 +15,7 @@ namespace FBFInventory.Domain.Entity
 
         public string SDRNumber { get; set; }
         public string DRNumber { get; set; }
-        public List<DRItem> Items { get; set; } 
+        public List<DRItem> Items { get; set; }
 
         public virtual Supplier Supplier { get; set; }
         public virtual Customer Customer { get; set; }

@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FBFInventory.Domain.Entity
 {
@@ -10,7 +11,7 @@ namespace FBFInventory.Domain.Entity
             DateAdded = DateTime.Now;
         }
 
-        public long Id { get; set; }
+        public long Id { get; set; }     
         public Item Item { get; set; }
         public double Qty { get; set; }
         public DateTime DateAdded { get; set; }

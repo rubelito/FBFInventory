@@ -51,10 +51,10 @@ namespace FBFInventory.Winforms
         private void SetValueToControls(){
             lblItem.Text = _item.Name;
 
-            if (_item.MeasuredBy == MeasuredBy.Quantity){
+            if (_item.MeasuredBy == MeasuredBy.pcs){
                 lblCurrentQty.Text = Convert.ToString(_item.Quantity);
-                lblMeasuredBy.Text = "Qty.";
-                lblMeasuredBy1.Text = "Qty.";
+                lblMeasuredBy.Text = "pcs.";
+                lblMeasuredBy1.Text = "pcs.";
             }
             else if (_item.MeasuredBy == MeasuredBy.Meters){
                 lblCurrentQty.Text = Convert.ToString(_item.Meters);

@@ -234,9 +234,9 @@ namespace FBFInventory.Winforms
             DRItem item = _drItems.FirstOrDefault(d => d.Item.Id == _selectedItemForReturn.Id);
             lblGoodQty.Text = Convert.ToString(item.Qty);
 
-            if (_selectedItemForReturn.MeasuredBy == MeasuredBy.Quantity){
-                lblGoodMeasuredBy.Text = "Qty.";
-                lblReturnMeasuredBy1.Text = "Qty.";
+            if (_selectedItemForReturn.MeasuredBy == MeasuredBy.pcs){
+                lblGoodMeasuredBy.Text = "pcs.";
+                lblReturnMeasuredBy1.Text = "pcs.";
             }
             else if (_selectedItemForReturn.MeasuredBy == MeasuredBy.Meters){
                 lblGoodMeasuredBy.Text = "m.";
@@ -253,9 +253,9 @@ namespace FBFInventory.Winforms
             DRItem item = _drItems.FirstOrDefault(d => d.Item.Id == _selectedItemForScrap.Id);
             lblScrapQty.Text = Convert.ToString(item.Qty);
 
-            if (_selectedItemForScrap.MeasuredBy == MeasuredBy.Quantity){
-                lblScrapMeasuredBy.Text = "Qty.";
-                lblScrapMeasuredBy1.Text = "Qty.";
+            if (_selectedItemForScrap.MeasuredBy == MeasuredBy.pcs){
+                lblScrapMeasuredBy.Text = "pcs.";
+                lblScrapMeasuredBy1.Text = "pcs.";
             }
             else if (_selectedItemForScrap.MeasuredBy == MeasuredBy.Meters){
                 lblScrapMeasuredBy.Text = "m.";

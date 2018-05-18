@@ -168,5 +168,16 @@ namespace FBFInventory.Infrastructure.Service
                 .Where(d => d.DRNumber.ToLower().Contains(drNumber.ToLower()))
                 .ToList();
         }
+
+        public List<DRItem> GetItemsByRange(DateTime from, DateTime to){
+            List<DRItem> items = _context.DRItems
+                .Include("DR")
+                .Include("Item")
+                .Where(d => d.DR.Type == ReceiptType.SDR && 
+                            d.DateAdded >= from &&
+                            d.DateAdded <= to).ToList();
+
+            return items;
+        }
     }
 }

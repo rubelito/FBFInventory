@@ -21,12 +21,21 @@ namespace FBFInventory.Infrastructure.ReportPoco
         public List<DaySection> DaySections { get; set; }
         public List<ItemRow> Items { get; set; }
 
-        public double Total{
+        public double InTotal{
             get{
-                double total = Items.Sum(i => i.Total);
+                double total = Items.Sum(i => i.InTotal);
                 return total;
             }
         }
+
+        public double OutTotal{
+            get{
+                double total = Items.Sum(i => i.OutTotal);
+                return total;
+            }
+        }
+
+        public WeeklySupplierDTO SupplierReport { get; set; }
     }
 
     public class DaySection
@@ -43,25 +52,33 @@ namespace FBFInventory.Infrastructure.ReportPoco
     public class ItemRow
     {
         public ItemRow(){
-            DailyOuts = new List<DailyOut>();
+            DailyInOuts = new List<DailyInOut>();
         }
 
         public long Id { get; set; }
         public string ItemName { get; set; }
 
-        public List<DailyOut> DailyOuts { get; set; }
+        public List<DailyInOut> DailyInOuts { get; set; }
 
-        public double Total{
+        public double InTotal{
             get{
-                double total = DailyOuts.Sum(d => d.OutQty);
+                double total = DailyInOuts.Sum(d => d.InQty);
+                return total;
+            }
+        }
+
+        public double OutTotal{
+            get{
+                double total = DailyInOuts.Sum(d => d.OutQty);
                 return total;
             }
         }
     }
 
-    public class DailyOut
+    public class DailyInOut
     {
         public DaySection DaySection { get; set; }
+        public double InQty { get; set; }
         public double OutQty { get; set; }
     }
 }
