@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBFInventory.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBFInventory.DB", "FBFInventory.DB\FBFInventory.DB.csproj", "{8810C8BA-A93B-49FE-A842-E091E5608266}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBFInventory.WebApp", "FBFInventory.WebApp\FBFInventory.WebApp.csproj", "{4A7E00CD-7998-47BE-9D28-9B37962FD917}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{8810C8BA-A93B-49FE-A842-E091E5608266}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8810C8BA-A93B-49FE-A842-E091E5608266}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8810C8BA-A93B-49FE-A842-E091E5608266}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A7E00CD-7998-47BE-9D28-9B37962FD917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A7E00CD-7998-47BE-9D28-9B37962FD917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A7E00CD-7998-47BE-9D28-9B37962FD917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A7E00CD-7998-47BE-9D28-9B37962FD917}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
